@@ -3,7 +3,7 @@ import {MatButton, MatButtonModule} from "@angular/material/button";
 
 const modules = [
   MatButtonModule,
-  
+
   ];
 
 @NgModule({
