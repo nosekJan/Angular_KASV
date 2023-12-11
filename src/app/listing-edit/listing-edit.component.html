@@ -1,1 +1,86 @@
-<p>listing-edit works!</p>
+<form (ngSubmit)="onSubmit()">
+  <mat-card class="example-card">
+    <mat-card-content>
+
+      <mat-card-header>
+        <mat-card-title>Create listing</mat-card-title>
+      </mat-card-header>
+
+      <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input matInput name="title">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea matInput
+                  name="description">
+        </textarea>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Price (EUR)</mat-label>
+        <input matInput name="price">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Image</mat-label>
+        <button mat-icon-button matPrefix (click)="f_input.click()">
+          <mat-icon>attach_file</mat-icon>
+        </button>
+        <input type="text" readonly matInput/>
+        <input
+          type="file"
+          hidden
+          #f_input
+        />
+        <mat-error>this field is required</mat-error>
+      </mat-form-field>
+
+      <mat-expansion-panel>
+
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Contact info (min. 2 fields required)
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <mat-form-field>
+          <mat-label>First name</mat-label>
+          <input matInput>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Last name</mat-label>
+          <input matInput>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Phone number</mat-label>
+          <input matInput>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Address</mat-label>
+          <input matInput>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Postal code</mat-label>
+          <input matInput>
+        </mat-form-field>
+
+      </mat-expansion-panel>
+
+      <mat-card-actions>
+        <button type="submit" mat-raised-button color="primary">Publish</button>
+      </mat-card-actions>
+
+    </mat-card-content>
+  </mat-card>
+</form>
