@@ -1,1 +1,13 @@
-<p>Navbar works!</p>
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="toggleSidenav()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span class="app-title">The Game Bazaar</span>
+  <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="navigateTo('/home')">Home</button>
+    <button mat-menu-item (click)="navigateTo('/about')">About</button>
+    <button mat-menu-item (click)="navigateTo('/contact')">Contact</button>
+  </mat-menu>
+</mat-toolbar>
+

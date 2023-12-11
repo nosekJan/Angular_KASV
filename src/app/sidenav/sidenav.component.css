@@ -1,0 +1,37 @@
+.full-width-container {
+  width: 100%;
+}
+
+.mat-toolbar {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.mat-sidenav {
+  width: 250px;
+}
+
+.mat-sidenav-container {
+  height: 100vh; /* 100% of the viewport height */
+}
+
+.mat-sidenav-content {
+  margin-left: 250px; /* Adjust the width of the sidenav */
+  box-sizing: border-box;
+}
+
+/* Responsive styles for smaller screens */
+@media screen and (max-width: 768px) {
+  .mat-sidenav {
+    width: 100%;
+    margin-left: -100%; /* Move the sidenav off-screen initially */
+  }
+
+  .mat-sidenav-content {
+    margin-left: 0;
+  }
+
+  .mat-sidenav.opened {
+    margin-left: 0;
+  }
+}
