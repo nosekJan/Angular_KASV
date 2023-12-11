@@ -1,0 +1,44 @@
+form {
+  width: 400px;
+  margin: auto;
+  align-content: center;
+}
+
+mat-card-title {
+  color: white;
+  width: auto;
+}
+
+mat-card {
+  margin-top: 100px;
+}
+
+mat-card-header{
+  padding-bottom: 10px;
+
+}
+
+mat-icon{
+  color: var(--mdc-filled-text-field-active-indicator-color);
+}
+
+.mat-mdc-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-card-actions{
+  flex-direction: column;
+}
+
+span{
+  padding-top: 20px;
+  font-size: 15px;
+  color: var(--mdc-filled-text-field-active-indicator-color);
+  font-family: var(--mat-form-field-container-text-font);
+}
+
+a{
+  color: white;
+  text-decoration: none;
+}
