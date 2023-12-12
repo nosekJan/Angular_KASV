@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {ListingEditComponent} from "./listing-edit/listing-edit.component";
+import {GameCardsComponent} from "./game-cards/game-cards.component";
 
 export const routes: Routes = [
   {path: "login", component: LoginComponent},
