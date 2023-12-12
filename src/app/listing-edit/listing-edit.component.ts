@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MaterialModule} from "../../modules/material.module";
 import {RouterLink} from "@angular/router";
 import {Listing} from "../../entities/listing";
 import {ContactInfo} from "../../entities/contact-info";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-listing-edit',
@@ -15,6 +16,9 @@ import {ContactInfo} from "../../entities/contact-info";
 })
 export class ListingEditComponent {
 
+  usersService = inject(UserService);
+
+  id: string = '';
   title: string = '';
   description: string = '';
   price: string = '';
@@ -41,7 +45,11 @@ export class ListingEditComponent {
     }
   }
   onSubmit() {
-    let listing = new Listing('', this.title, this.description, Number.parseFloat(this.price), '', this.contactInfo);
+    const categories: string[] = [];
+    let listing = new Listing('', this.title, this.description, Number.parseFloat(this.price), categories,'', this.contactInfo);
+    const action: string = this.id == '' ? "post" : "edit";
     console.log(listing);
+    this.usersService.saveListing(listing, action).subscribe(success => {
+      console.log(success ? "successful" : "failed")});
   }
 }

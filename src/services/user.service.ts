@@ -4,6 +4,7 @@ import {Auth} from "../entities/auth";
 import {catchError, EMPTY, map, Observable} from "rxjs";
 import {User} from "../entities/user";
 import {MessagingService} from "./messaging.service";
+import {Listing} from "../entities/listing";
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +55,16 @@ export class UserService {
       .post<User>(this.url + 'register', user)
       .pipe(
         map((jsonUser) => User.clone(jsonUser)),
+        catchError((error) => this.errorHandling(error)
+        ),
+      )
+  }
+
+  public saveListing(listing: Listing, action: string) {
+    return this.http
+      .post<Listing>(this.url + action + "-listing", listing, {headers: {Authentication: this.token}})
+      .pipe(
+        map((jsonUser) => Listing.clone(jsonUser)),
         catchError((error) => this.errorHandling(error)
         ),
       )
