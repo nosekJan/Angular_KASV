@@ -6,5 +6,6 @@ import {ListingEditComponent} from "./listing-edit/listing-edit.component";
 export const routes: Routes = [
   {path: "login", component: LoginComponent},
   {path: "register", component: RegisterComponent},
-  {path: "listing-edit", component: ListingEditComponent}
+  {path: "listing-edit", component: ListingEditComponent},
+  {path: "listings", component: GameCardsComponent}
 ];

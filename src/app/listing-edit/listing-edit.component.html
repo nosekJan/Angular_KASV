@@ -8,19 +8,40 @@
 
       <mat-form-field>
         <mat-label>Title</mat-label>
-        <input matInput name="title">
+        <input matInput
+               required
+               maxlength="100"
+               name="title"
+               [formControl]="titleFormControl"
+              >
+        <mat-error *ngIf="titleFormControl.hasError('required')">
+          This field is required
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Description</mat-label>
         <textarea matInput
-                  name="description">
+                  required
+                  maxlength="300"
+                  name="description"
+                  [formControl]="descriptionFormControl"
+                  >
         </textarea>
+        <mat-error *ngIf="descriptionFormControl.hasError('required')">
+          This field is required
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Price (EUR)</mat-label>
-        <input matInput name="price">
+        <input matInput name="price" [formControl]="priceFormControl">
+        <mat-error *ngIf="priceFormControl.hasError('required')">
+          Price is required
+        </mat-error>
+        <mat-error *ngIf="priceFormControl.hasError('invalidFormat')">
+          Define the price in the format 00.00
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field>
@@ -28,13 +49,15 @@
         <button mat-icon-button matPrefix (click)="f_input.click()">
           <mat-icon>attach_file</mat-icon>
         </button>
-        <input type="text" readonly matInput/>
+        <input type="text" readonly matInput [formControl]="imageFormControl"/>
         <input
           type="file"
           hidden
           #f_input
+          accept="image/png"
+          (change)="handleFileInputChange(f_input.files)"
         />
-        <mat-error>this field is required</mat-error>
+        <mat-error>You must select an image for the listing</mat-error>
       </mat-form-field>
 
       <mat-expansion-panel>
