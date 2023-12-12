@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {FormControl, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MaterialModule} from "../../modules/material.module";
 import {RouterLink} from "@angular/router";
-import {priceFormatValidator} from "../../services/input.validators";
+import {Listing} from "../../entities/listing";
+import {ContactInfo} from "../../entities/contact-info";
 
 @Component({
   selector: 'app-listing-edit',
@@ -14,15 +15,18 @@ import {priceFormatValidator} from "../../services/input.validators";
 })
 export class ListingEditComponent {
 
-  titleFormControl = new FormControl('', [Validators.required]);
-  descriptionFormControl = new FormControl('', [Validators.required]);
-  imageFormControl: FormControl = new FormControl("", Validators.required);
-  priceFormControl = new FormControl('', [
-    Validators.required,
-    priceFormatValidator // Apply the custom validator here
-  ]);
+  title: string = '';
+  description: string = '';
+  price: string = '';
+  contactInfo: ContactInfo = new ContactInfo('', '', '', '', '', '');
 
   file_store: FileList | null = null;
+  imageFormControl= new FormControl('', Validators.required);
+
+  validatePriceFormat() {
+    const priceRegex = /^\d+(\.\d{1,2})?$/; // Regular expression for a number with maximum two decimal places
+    return priceRegex.test(this.price || '');
+  }
 
   handleFileInputChange(l: FileList | null): void {
     this.file_store = l;
@@ -37,6 +41,7 @@ export class ListingEditComponent {
     }
   }
   onSubmit() {
-
+    let listing = new Listing('', this.title, this.description, Number.parseFloat(this.price), '', this.contactInfo);
+    console.log(listing);
   }
 }
