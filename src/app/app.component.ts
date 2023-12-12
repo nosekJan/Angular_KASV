@@ -4,11 +4,12 @@ import { RouterOutlet } from '@angular/router';
 import {NavbarComponent} from "./navbar/navbar.component";
 import {MaterialModule} from "../modules/material.module";
 import {SidenavComponent} from "./sidenav/sidenav.component";
+import {GameCardsComponent} from "./game-cards/game-cards.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, NavbarComponent, MaterialModule, SidenavComponent],
+  imports: [CommonModule, RouterOutlet, NavbarComponent, MaterialModule, SidenavComponent, GameCardsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
