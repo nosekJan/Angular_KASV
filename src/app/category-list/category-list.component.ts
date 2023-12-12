@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import {GameCardsComponent} from "../game-cards/game-cards.component";
 
 @Component({
-  selector: 'app-home-page',
+  selector: 'app-category-list',
   standalone: true,
   imports: [CommonModule, GameCardsComponent],
-  templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.css'
+  templateUrl: './category-list.component.html',
+  styleUrl: './category-list.component.css'
 })
-export class HomePageComponent {
+export class CategoryListComponent {
 
 }
