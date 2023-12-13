@@ -22,7 +22,6 @@ export class LoginComponent {
 
   onSubmit() {
     this.usersService.login(this.auth).subscribe(success => {
-      console.log(success ? "login successful" : "login failed");
       this.router.navigateByUrl("/");
     })
   }

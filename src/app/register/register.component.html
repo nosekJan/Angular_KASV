@@ -8,17 +8,20 @@
 
       <mat-form-field>
         <mat-label>Username</mat-label>
-        <input matInput name="username">
+        <input matInput name="username" [(ngModel)]="user.username">
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Password</mat-label>
-        <input matInput type="password" name="password">
+        <input matInput type="password" name="password" [(ngModel)]="user.password">
       </mat-form-field>
 
       <mat-form-field>
-        <mat-label>Password</mat-label>
-        <input matInput [type]="hide ? 'password' : 'text'" name="password">
+        <mat-label>Repeat password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" name="password2" [(ngModel)]="repeatPassword">
+        <mat-error *ngIf="!passwordsMatch()">
+          The passwords are not matching
+        </mat-error>
         <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
@@ -34,32 +37,32 @@
 
         <mat-form-field>
           <mat-label>First name</mat-label>
-          <input matInput>
+          <input matInput name="firstName" [(ngModel)]="user.contactInfo.firstName">
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Last name</mat-label>
-          <input matInput>
+          <input matInput name="lastName" [(ngModel)]="user.contactInfo.lastName">
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Email</mat-label>
-          <input matInput>
+          <input matInput name="email" [(ngModel)]="user.contactInfo.email">
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Phone number</mat-label>
-          <input matInput>
+          <input matInput name="phoneNumber" [(ngModel)]="user.contactInfo.phoneNumber">
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Address</mat-label>
-          <input matInput>
+          <input matInput name="address" [(ngModel)]="user.contactInfo.address">
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Postal code</mat-label>
-          <input matInput>
+          <input matInput name="postalCode" [(ngModel)]="user.contactInfo.postalCode">
         </mat-form-field>
 
       </mat-expansion-panel>
