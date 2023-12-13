@@ -9,8 +9,7 @@ import {CategoryListComponent} from "./category-list/category-list.component";
 export const routes: Routes = [
   {path: "login", component: LoginComponent},
   {path: "register", component: RegisterComponent},
-  {path: "listing-edit", component: ListingEditComponent},
-  {path: "listings", component: GameCardsComponent},
+  {path: "listing-edit/:id", component: ListingEditComponent},
   {path: "", component: HomePageComponent, pathMatch: "full"},
-  {path: "category", component: CategoryListComponent},
+  {path: "category/:category", component: CategoryListComponent},
 ];

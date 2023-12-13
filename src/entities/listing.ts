@@ -5,6 +5,7 @@ export class Listing {
   public static clone(listing: Listing): Listing {
     return listing;
   }
+
   constructor(
     public sellerId: string,
     public title: string,
