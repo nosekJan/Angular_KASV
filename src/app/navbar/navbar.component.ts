@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {NgIcon, provideIcons} from "@ng-icons/core";
-import {featherHome, featherLogIn, featherPlusCircle, featherUser} from '@ng-icons/feather-icons';
+import {featherHome, featherLogIn, featherLogOut, featherPlusCircle, featherUser} from '@ng-icons/feather-icons';
 import {RouterLink} from "@angular/router";
 import {UserService} from "../../services/user.service";
 
@@ -10,7 +10,7 @@ import {UserService} from "../../services/user.service";
   selector: 'app-navbar',
   standalone: true,
   imports: [CommonModule, NgIcon, RouterLink],
-  viewProviders: [provideIcons({featherHome, featherPlusCircle, featherUser, featherLogIn})],
+  viewProviders: [provideIcons({featherHome, featherPlusCircle, featherUser, featherLogIn, featherLogOut})],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
@@ -21,6 +21,10 @@ export class NavbarComponent {
 
   isLogged(): boolean {
     return this.userService.isLogged();
+  }
+
+  logout() {
+    this.userService.logout();
   }
 
   toggleSidenav() {
