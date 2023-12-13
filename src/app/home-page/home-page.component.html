@@ -23,26 +23,8 @@
 </form>
 
 <ul class="flex flex-wrap items-center justify-center font-bold">
-  <li>
-    <a href="#" class="me-4 hover:text-primary md:me-6">Category1</a>
-  </li>
-  <li>
-    <a href="#" class="me-4 hover:text-primary md:me-6">Category2</a>
-  </li>
-  <li>
-    <a href="#" class="me-4 hover:text-primary md:me-6 ">Category3</a>
-  </li>
-  <li>
-    <a href="#" class="me-4 hover:text-primary md:me-6">Category4</a>
-  </li>
-  <li>
-    <a href="#" class="me-4 hover:text-primary md:me-6">Category5</a>
-  </li>
-  <li>
-    <a href="#" class="me-4 hover:text-primary md:me-6">Category6</a>
-  </li>
-  <li>
-    <a href="#" class="me-4 hover:text-primary md:me-6">Category7</a>
+  <li *ngFor="let category of categories">
+    <a routerLink="/category" class="me-4 hover:text-primary md:me-6">{{ category }}</a>
   </li>
 </ul>
 <app-game-cards></app-game-cards>

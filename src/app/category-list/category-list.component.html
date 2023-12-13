@@ -9,45 +9,9 @@
 
       <hr class="h-px my-1 bg-gray-700 border-0 ">
 
-      <li>
-        <a href="#" class="flex items-center p-2 rounded-lg hover:bg-primary group">
-          <span class="ms-3">Category1</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="#" class="flex items-center p-2 rounded-lg hover:bg-primary group">
-          <span class="ms-3">Category2</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="#" class="flex items-center p-2 rounded-lg hover:bg-primary group">
-          <span class="ms-3">Category3</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="#" class="flex items-center p-2 rounded-lg hover:bg-primary group">
-          <span class="ms-3">Category4</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="#" class="flex items-center p-2 rounded-lg hover:bg-primary group">
-          <span class="ms-3">Category5</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="#" class="flex items-center p-2 rounded-lg hover:bg-primary group">
-          <span class="ms-3">Category6</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="#" class="flex items-center p-2 rounded-lg hover:bg-primary group">
-          <span class="ms-3">Category7</span>
+      <li *ngFor="let category of categories">
+        <a routerLink="/category" class="flex items-center p-2 rounded-lg hover:bg-primary group">
+          <span class="ms-3">{{ category }}</span>
         </a>
       </li>
 
