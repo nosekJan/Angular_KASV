@@ -50,6 +50,10 @@ export class UserService {
     this.username = ''
   }
 
+  isLogged() :boolean {
+    return !!this.token;
+  }
+
   public saveUser(user: User): Observable<User> {
     return this.http
       .post<User>(this.url + 'register', user)
