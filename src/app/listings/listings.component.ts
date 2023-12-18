@@ -2,7 +2,7 @@ import {Component, inject, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {GameCardComponent} from "../game-card/game-card.component";
 import {CATEGORIES, ListingService} from "../../services/listing.service";
-import {ActivatedRoute, ParamMap, RouterLink} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, ParamMap, Router, RouterLink} from "@angular/router";
 import {Listing} from "../../entities/listing";
 import {UserService} from "../../services/user.service";
 import {switchMap} from "rxjs";
@@ -20,6 +20,7 @@ export class ListingsComponent implements OnInit {
   categories = CATEGORIES;
   listingService: ListingService = inject(ListingService);
   route: ActivatedRoute = inject(ActivatedRoute);
+  router: Router = inject(Router);
   paramMap: ParamMap = this.route.snapshot.paramMap;
 
   titleSearchString = '';
@@ -35,7 +36,14 @@ export class ListingsComponent implements OnInit {
   ngOnInit() {
     this.listingService.getListings(this.searchParams)
       .subscribe(listings => this.listings = listings);
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        window.location.reload();
+      }
+    });
   }
+
+
 
   searchByTitle() {
 

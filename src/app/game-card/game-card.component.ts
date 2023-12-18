@@ -1,4 +1,4 @@
-import {Component, inject, OnInit, Input} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
@@ -13,14 +13,9 @@ import {ContactInfo} from "../../entities/contact-info";
   styleUrl: './game-card.component.css'
 })
 
-export class GameCardComponent implements OnInit {
+export class GameCardComponent{
 
   @Input() listing = new Listing('','','',0,[],'',
     new ContactInfo('','','','','',''));
 
-  constructor() {}
-
-  ngOnInit() {
-    console.log(this.listing);
-  }
 }
