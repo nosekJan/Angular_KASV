@@ -15,7 +15,6 @@ export class ListingService {
   url = "http://localhost:8080/";
   userService: UserService = inject(UserService);
   token = this.userService.token;
-  private Group: any;
 
   public getListings(params: string): Observable<Listing[]> {
     return this.http.get<Listing[]>(this.url + 'search' + params, {headers:{Authorization: this.token}}).pipe(
@@ -24,6 +23,18 @@ export class ListingService {
       ),
       catchError((error) => this.errorHandling(error)),
     )
+  }
+
+  public saveListing(listing: Listing, image: FileList | null, action: string) {
+    return this.http
+      .post<Listing>(this.url + action + "-listing", listing, {headers: {Authentication: this.token}})
+      .pipe(
+        map( imageId =>
+          this.http.post(this.url + 'upload-image/' + imageId, image?.item(0), {headers: {Authentication: this.token}})
+        ),
+        catchError((error) => this.errorHandling(error)
+        )
+      );
   }
 
   errorHandling(httpError: any): Observable<never> {

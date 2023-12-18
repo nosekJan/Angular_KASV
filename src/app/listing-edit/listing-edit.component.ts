@@ -6,6 +6,7 @@ import {RouterLink} from "@angular/router";
 import {Listing} from "../../entities/listing";
 import {ContactInfo} from "../../entities/contact-info";
 import {UserService} from "../../services/user.service";
+import {ListingService} from "../../services/listing.service";
 
 @Component({
   selector: 'app-listing-edit',
@@ -16,7 +17,7 @@ import {UserService} from "../../services/user.service";
 })
 export class ListingEditComponent {
 
-  usersService = inject(UserService);
+  listingService = inject(ListingService);
 
   id: string = '';
   title: string = '';
@@ -49,7 +50,7 @@ export class ListingEditComponent {
     let listing = new Listing('', this.title, this.description, Number.parseFloat(this.price), categories,'', this.contactInfo);
     const action: string = this.id == '' ? "post" : "edit";
     console.log(listing);
-    this.usersService.saveListing(listing, action).subscribe(success => {
+    this.listingService.saveListing(listing, this.file_store, action).subscribe(success => {
       console.log(success ? "successful" : "failed")});
   }
 }

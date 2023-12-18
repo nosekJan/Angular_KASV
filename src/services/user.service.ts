@@ -24,8 +24,6 @@ export class UserService {
 
   private _location = '';
 
-  username: string = "";
-
   get token(): string {
     return localStorage.getItem('token') || '';
   }
@@ -37,6 +35,17 @@ export class UserService {
       localStorage.removeItem('token');
   }
 
+  get username(): string {
+    return localStorage.getItem('username') || '';
+  }
+
+  set username(value: string) {
+    if (value)
+      localStorage.setItem('username', value);
+    else
+      localStorage.removeItem('username');
+  }
+
   login(auth: Auth): Observable<boolean> {
     return this.http.get(this.url + "login",
       {
@@ -45,16 +54,16 @@ export class UserService {
       }
     ).pipe(
       map(token => {
-        this.token = token;
         this.username = auth.name;
+        this.token = token;
         return true;
       })
     );
   }
 
   logout() {
-    this.token = ''
-    this.username = ''
+    this.token = '';
+    this.username = '';
   }
 
   isLogged() :boolean {
@@ -66,16 +75,6 @@ export class UserService {
       .post<User>(this.url + 'register', user)
       .pipe(
         map((jsonUser) => User.clone(jsonUser)),
-        catchError((error) => this.errorHandling(error)
-        ),
-      )
-  }
-
-  public saveListing(listing: Listing, action: string) {
-    return this.http
-      .post<Listing>(this.url + action + "-listing", listing, {headers: {Authentication: this.token}})
-      .pipe(
-        map((jsonUser) => Listing.clone(jsonUser)),
         catchError((error) => this.errorHandling(error)
         ),
       )
