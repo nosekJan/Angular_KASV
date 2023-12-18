@@ -4,15 +4,25 @@ import {Auth} from "../entities/auth";
 import {catchError, EMPTY, map, Observable} from "rxjs";
 import {User} from "../entities/user";
 import {Listing} from "../entities/listing";
+import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  get location(): string {
+    return this._location;
+  }
+
+  set location(value: string) {
+    this._location = value;
+  }
 
   constructor(private http: HttpClient) {}
 
   url = "http://localhost:8080/";
+
+  private _location = '';
 
   username: string = "";
 

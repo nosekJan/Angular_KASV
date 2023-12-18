@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {ListingEditComponent} from "./listing-edit/listing-edit.component";
-import {GameCardsComponent} from "./game-cards/game-cards.component";
+import {GameCardComponent} from "./game-card/game-card.component";
 import {HomePageComponent} from "./home-page/home-page.component";
 import {ListingsComponent} from "./listings/listings.component";
 

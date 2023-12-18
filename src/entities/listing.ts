@@ -7,7 +7,7 @@ export class Listing {
   }
 
   constructor(
-    public sellerId: string,
+    public seller: string,
     public title: string,
     public description: string,
     public price: number,

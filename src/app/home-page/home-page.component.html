@@ -9,7 +9,7 @@
   </div>
 </div>
 
-<form (click)="onSubmit()">
+<form>
   <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only ">Search</label>
   <div class="relative max-w-xl mx-auto my-10">
     <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -18,7 +18,7 @@
       </svg>
     </div>
     <input [(ngModel)]="searchString" name="search" type="search" id="default-search" class="block w-full p-4 ps-10 text-sm bg-gray-800 border rounded-lg border-gray-600 placeholder-gray-400 text-white" placeholder="Search for your game..." required>
-    <button type="submit" class="text-white absolute end-2.5 bottom-2.5 font-medium rounded-lg text-sm px-4 py-2 bg-primary hover:bg-secondary focus:ring-secondary">Search</button>
+    <button (click)="searchByTitle()" type="button" class="text-white absolute end-2.5 bottom-2.5 font-medium rounded-lg text-sm px-4 py-2 bg-primary hover:bg-secondary focus:ring-secondary">Search</button>
   </div>
 </form>
 
@@ -27,5 +27,5 @@
     <a routerLink="/listings/{{category}}/-/-/-" class="me-4 hover:text-primary md:me-6">{{ category }}</a>
   </li>
 </ul>
-<app-game-cards></app-game-cards>
+<app-game-card></app-game-card>
 
