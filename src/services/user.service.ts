@@ -1,28 +1,20 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Auth} from "../entities/auth";
 import {catchError, EMPTY, map, Observable} from "rxjs";
 import {User} from "../entities/user";
-import {Listing} from "../entities/listing";
-import {error} from "@angular/compiler-cli/src/transformers/util";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  get location(): string {
-    return this._location;
-  }
 
-  set location(value: string) {
-    this._location = value;
-  }
-
-  constructor(private http: HttpClient) {}
-
+  http: HttpClient = inject(HttpClient);
+  router: Router = inject(Router);
   url = "http://localhost:8080/";
 
-  private _location = '';
+  restrictedUrlPatterns = /(listing-edit|profile)/;
 
   get token(): string {
     return localStorage.getItem('token') || '';
@@ -64,6 +56,9 @@ export class UserService {
   logout() {
     this.token = '';
     this.username = '';
+    console.log(this.router.url);
+    if (this.restrictedUrlPatterns.test(this.router.url))
+      this.router.navigateByUrl('/');
   }
 
   isLogged() :boolean {

@@ -1,5 +1,5 @@
-import {Component, inject} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {Component, inject, OnInit} from '@angular/core';
+import {CommonModule, Location} from '@angular/common';
 import {MaterialModule} from "../../modules/material.module";
 import {FormsModule} from "@angular/forms";
 import {Auth} from "../../entities/auth";
@@ -14,15 +14,15 @@ import {Router, RouterLink} from "@angular/router";
   styleUrl: './login.component.css'
 })
 
-export class LoginComponent {
+export class LoginComponent{
   hide = true;
   auth = new Auth('', '');
   usersService = inject(UserService);
-  router = inject(Router);
+  location: Location = inject(Location);
 
   onSubmit() {
     this.usersService.login(this.auth).subscribe(success => {
-      this.router.navigateByUrl("/");
+      this.location.back();
     })
   }
 }

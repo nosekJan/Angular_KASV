@@ -2,7 +2,7 @@ import {Component, inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MaterialModule} from "../../modules/material.module";
-import {RouterLink} from "@angular/router";
+import {ActivatedRoute, ParamMap, Router, RouterLink} from "@angular/router";
 import {Listing} from "../../entities/listing";
 import {ContactInfo} from "../../entities/contact-info";
 import {UserService} from "../../services/user.service";
@@ -18,6 +18,9 @@ import {ListingService} from "../../services/listing.service";
 export class ListingEditComponent {
 
   listingService = inject(ListingService);
+  route: ActivatedRoute = inject(ActivatedRoute);
+  router: Router = inject(Router);
+  paramMap: ParamMap = this.route.snapshot.paramMap;
 
   id: string = '';
   title: string = '';
@@ -48,7 +51,7 @@ export class ListingEditComponent {
   onSubmit() {
     const categories: string[] = [];
     let listing = new Listing('', this.title, this.description, Number.parseFloat(this.price), categories,'', this.contactInfo);
-    const action: string = this.id == '' ? "post" : "edit";
+    const action: string = this.paramMap.get('action') || 'post';
     console.log(listing);
     this.listingService.saveListing(listing, this.file_store, action).subscribe(success => {
       console.log(success ? "successful" : "failed")});

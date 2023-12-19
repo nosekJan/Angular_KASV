@@ -9,7 +9,7 @@ import {ListingsComponent} from "./listings/listings.component";
 export const routes: Routes = [
   {path: "login", component: LoginComponent},
   {path: "register", component: RegisterComponent},
-  {path: "listing-edit/:id", component: ListingEditComponent},
+  {path: "listing-edit/:action", component: ListingEditComponent},
   {path: "", component: HomePageComponent, pathMatch: "full"},
   {path: "listings/:category/:title/:maxPrice/:seller", component: ListingsComponent},
 ];
