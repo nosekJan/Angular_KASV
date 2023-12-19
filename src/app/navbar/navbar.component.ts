@@ -2,7 +2,7 @@ import {Component, inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {NgIcon, provideIcons} from "@ng-icons/core";
 import {featherHome, featherLogIn, featherLogOut, featherPlusCircle, featherUser} from '@ng-icons/feather-icons';
-import {RouterLink} from "@angular/router";
+import {ActivatedRoute, ParamMap, Router, RouterLink} from "@angular/router";
 import {UserService} from "../../services/user.service";
 
 

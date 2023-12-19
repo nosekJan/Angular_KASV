@@ -1,11 +1,11 @@
 <div class="navbar bg-gray-800">
   <div class="flex-1 ml-20">
     <a class="btn btn-ghost hover:bg-secondary text-xl" routerLink="/"><ng-icon name="featherHome"></ng-icon></a>
-    <a class="btn btn-ghost hover:bg-secondary text-xl" routerLink="/listing-edit"><ng-icon name="featherPlusCircle"></ng-icon></a>
+    <a class="btn btn-ghost hover:bg-secondary text-xl" *ngIf="isLogged()" routerLink="/listing-edit/post"><ng-icon name="featherPlusCircle"></ng-icon></a>
   </div>
   <div class="flex-none mr-20">
       <a class="btn btn-ghost hover:bg-secondary text-xl" *ngIf="!isLogged()" routerLink="/login"><ng-icon name="featherLogIn"></ng-icon></a>
-      <a class="btn btn-ghost hover:bg-secondary text-xl" *ngIf="isLogged()"><ng-icon name="featherUser"></ng-icon></a>
+      <a class="btn btn-ghost hover:bg-secondary text-xl" *ngIf="isLogged()"><ng-icon name="featherUser"></ng-icon>{{this.userService.username}}</a>
       <a class="btn btn-ghost hover:bg-secondary text-xl" *ngIf="isLogged()" (click)="logout()"><ng-icon name="featherLogOut"></ng-icon></a>
   </div>
 </div>
