@@ -28,7 +28,12 @@ export class ListingEditComponent implements OnInit{
   description: string = '';
   price: string = '';
   contactInfo: ContactInfo = new ContactInfo('', '', '', '', '', '');
+
   categories = CATEGORIES;
+  category1 = '';
+  category2 = '';
+  category3 = '';
+  selectedCategories = '';
 
   file_store: FileList | null = null;
 
@@ -40,6 +45,12 @@ export class ListingEditComponent implements OnInit{
       image: new FormControl('', Validators.required),
     });
   }
+
+  removeCategory(category: string) {
+    this.categories.splice(this.categories.indexOf(category), 1);
+    console.log(this.categories);
+  }
+
   ngOnInit() {
     console.log(this.title=="")
   }
@@ -72,4 +83,6 @@ export class ListingEditComponent implements OnInit{
     this.listingService.saveListing(listing, this.file_store, action).subscribe(success => {
       console.log(success ? "successful" : "failed")});
   }
+
+    protected readonly CATEGORIES = CATEGORIES;
 }
