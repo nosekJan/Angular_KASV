@@ -5,7 +5,7 @@ import {MaterialModule} from "../../modules/material.module";
 import {ActivatedRoute, ParamMap, Router, RouterLink} from "@angular/router";
 import {Listing} from "../../entities/listing";
 import {ContactInfo} from "../../entities/contact-info";
-import {ListingService} from "../../services/listing.service";
+import {CATEGORIES, ListingService} from "../../services/listing.service";
 
 @Component({
   selector: 'app-listing-edit',
@@ -28,6 +28,7 @@ export class ListingEditComponent implements OnInit{
   description: string = '';
   price: string = '';
   contactInfo: ContactInfo = new ContactInfo('', '', '', '', '', '');
+  categories = CATEGORIES;
 
   file_store: FileList | null = null;
 

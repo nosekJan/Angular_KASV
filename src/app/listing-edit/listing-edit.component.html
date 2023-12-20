@@ -165,10 +165,23 @@
         </div>
       </div>
 
+      <div class="w-full px-3 pb-3">
+        <select
+          class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
+          
+        >
+          <option selected disabled hidden="hidden">Category</option>
+          <option *ngFor = "let category of categories">{{category}}</option>
+        </select>
+        <div role="alert" *ngIf="yourForm.controls['title'].errors?.['required'] && yourForm.controls['title'].touched">
+          <p class="text-xs pt-2 text-red-500">Please fill out this field.</p>
+        </div>
+      </div>
 
-      <p class="text-lg font-bold text-center pb-2">Contact info (min. 2 fields required)</p>
 
-      <div class="grid grid-cols-2 gap-4">
+      <p class="text-lg font-bold text-center pb-2">Contact info</p>
+
+      <div class="grid grid-cols-2">
         <div class="w-full px-3 pb-3">
           <input
             type="text"
