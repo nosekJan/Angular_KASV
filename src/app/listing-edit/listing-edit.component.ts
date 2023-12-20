@@ -1,11 +1,10 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MaterialModule} from "../../modules/material.module";
 import {ActivatedRoute, ParamMap, Router, RouterLink} from "@angular/router";
 import {Listing} from "../../entities/listing";
 import {ContactInfo} from "../../entities/contact-info";
-import {UserService} from "../../services/user.service";
 import {ListingService} from "../../services/listing.service";
 
 @Component({
@@ -15,12 +14,14 @@ import {ListingService} from "../../services/listing.service";
   templateUrl: './listing-edit.component.html',
   styleUrl: './listing-edit.component.css'
 })
-export class ListingEditComponent {
+export class ListingEditComponent implements OnInit{
 
   listingService = inject(ListingService);
   route: ActivatedRoute = inject(ActivatedRoute);
   router: Router = inject(Router);
   paramMap: ParamMap = this.route.snapshot.paramMap;
+
+  yourForm: FormGroup;
 
   id: string = '';
   title: string = '';
@@ -29,22 +30,36 @@ export class ListingEditComponent {
   contactInfo: ContactInfo = new ContactInfo('', '', '', '', '', '');
 
   file_store: FileList | null = null;
-  imageFormControl= new FormControl('', Validators.required);
+
+  constructor(private fb: FormBuilder) {
+    this.yourForm = this.fb.group({
+      title: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required),
+      price: new FormControl('', Validators.required),
+      image: new FormControl('', Validators.required),
+    });
+  }
+  ngOnInit() {
+    console.log(this.title=="")
+  }
 
   validatePriceFormat() {
     const priceRegex = /^\d+(\.\d{1,2})?$/; // Regular expression for a number with maximum two decimal places
     return priceRegex.test(this.price || '');
   }
 
-  handleFileInputChange(l: FileList | null): void {
-    this.file_store = l;
-    if (l != null) {
-      if (l.length) {
-        const f = l[0];
-        const count = l.length > 1 ? `(+${l.length - 1} files)` : "";
-        this.imageFormControl.patchValue(`${f.name}${count}`);
+  handleFileInputChange(event: any): void {
+    const files: FileList | null = event.target.files;
+
+    this.file_store = files;
+
+    if (files != null) {
+      if (files.length) {
+        const file = files[0];
+        const count = files.length > 1 ? `(+${files.length - 1} files)` : "";
+        this.yourForm.controls['image'].patchValue(`${file.name} ${count}`);
       } else {
-        this.imageFormControl.patchValue("");
+        this.yourForm.controls['image'].patchValue('');
       }
     }
   }

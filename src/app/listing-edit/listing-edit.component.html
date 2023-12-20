@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit()" #myForm="ngForm">
+<!--<form (ngSubmit)="onSubmit()" #myForm="ngForm">
   <mat-card class="example-card">
     <mat-card-content>
 
@@ -14,7 +14,7 @@
         </mat-error>
       </mat-form-field>
 
-      <!-- Description -->
+      &lt;!&ndash; Description &ndash;&gt;
       <mat-form-field>
         <mat-label>Description</mat-label>
         <textarea matInput name="description" [(ngModel)]="description" required #descriptionField="ngModel"></textarea>
@@ -23,7 +23,7 @@
         </mat-error>
       </mat-form-field>
 
-      <!-- Price -->
+      &lt;!&ndash; Price &ndash;&gt;
       <mat-form-field>
         <mat-label>Price (EUR)</mat-label>
         <input matInput name="price" [(ngModel)]="price" required #priceField="ngModel" pattern="^\d+(\.\d{1,2})?$">
@@ -32,14 +32,14 @@
         </mat-error>
       </mat-form-field>
 
-      <!-- Other input fields... -->
+      &lt;!&ndash; Other input fields... &ndash;&gt;
 
       <mat-form-field>
         <mat-label>Image</mat-label>
         <button mat-icon-button matPrefix (click)="f_input.click()">
           <mat-icon>attach_file</mat-icon>
         </button>
-        <input type="text" readonly matInput [formControl]="imageFormControl"/>
+        <input type="text" readonly matInput [formControl]=""/>
         <input
           type="file"
           hidden
@@ -96,44 +96,45 @@
 
     </mat-card-content>
   </mat-card>
-</form>
+</form>-->
 
 <div class="flex items-center justify-center h-screen">
-  <form (ngSubmit)="onSubmit()" class="bg-gray-800 shadow-xl rounded-xl p-6">
+  <form (ngSubmit)="onSubmit()" class="bg-gray-800 shadow-xl rounded-xl p-6" >
     <div class="w-full">
       <p class="text-xl font-bold text-center pb-2">Create Listing</p>
 
-      <div class="w-full px-3 pb-3">
+      <div class="w-full px-3 pb-3" [formGroup]="yourForm">
+
+
         <input type="text"
                id="titleField"
                name="titleField"
                placeholder="Title"
                class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
                required
-               [(ngModel)]="title"
-               #titleField="ngModel"
+               formControlName="title"
         />
-        <div role="alert" *ngIf="titleField.errors?.['required'] && titleField.touched">
+
+        <div role="alert" *ngIf="yourForm.controls['title'].errors?.['required'] && yourForm.controls['title'].touched">
           <p class="text-xs pt-2 text-red-500">Please fill out this field.</p>
         </div>
       </div>
 
-      <div class="w-full px-3 pb-3">
+      <div class="w-full px-3 pb-3" [formGroup]="yourForm">
         <textarea
           id="descriptionField"
           name="descriptionField"
           placeholder="Description"
           class="textarea hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
           required
-          [(ngModel)]="description"
-          #descriptionField="ngModel"
+          formControlName="description"
         ></textarea>
-        <div role="alert" *ngIf="descriptionField.errors?.['required'] && descriptionField.touched">
+        <div role="alert" *ngIf="yourForm.controls['description'].errors?.['required'] && yourForm.controls['description'].touched">
           <p class="text-xs pt-2 text-red-500">Please fill out this field.</p>
         </div>
       </div>
 
-      <div class="w-full px-3 pb-3">
+      <div class="w-full px-3 pb-3" [formGroup]="yourForm">
         <input
           type="number"
           id="priceField"
@@ -141,15 +142,14 @@
           placeholder="Price (EUR)"
           class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
           required
-          [(ngModel)]="price"
-          #priceField="ngModel"
+          formControlName="price"
         />
-        <div role="alert" *ngIf="priceField.errors?.['required'] && priceField.touched">
+        <div role="alert" *ngIf="yourForm.controls['price'].errors?.['required'] && yourForm.controls['price'].touched">
           <p class="text-xs pt-2 text-red-500">Please fill out this field.</p>
         </div>
       </div>
 
-      <div class="w-full px-3 pb-3">
+      <div class="w-full px-3 pb-3" [formGroup]="yourForm">
         <input
           type="file"
           id="imageField"
@@ -157,13 +157,14 @@
           class="file-input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
           required
           accept="image/png"
-          (change)="handleFileInputChange(f_input.files)"
-          #f_input
+          (change)="handleFileInputChange($event)"
+          formControlName="image"
         />
-        <div role="alert" >
-          <p class="text-xs pt-2 text-red-500">Please select an image.</p>
+        <div role="alert" *ngIf="yourForm.controls['image'].errors?.['required']">
+          <p class="text-xs pt-2 text-red-500">Please select an .png image.</p>
         </div>
       </div>
+
 
       <p class="text-lg font-bold text-center pb-2">Contact info (min. 2 fields required)</p>
 
@@ -263,6 +264,7 @@
             <p class="text-red-500 text-xs pt-2">Please fill out this field.</p>
           </div>
         </div>
+
       </div>
 
       <div>
@@ -271,6 +273,7 @@
           Publish
         </button>
       </div>
+
     </div>
   </form>
 </div>
