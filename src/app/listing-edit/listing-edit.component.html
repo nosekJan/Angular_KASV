@@ -99,7 +99,7 @@
 </form>-->
 
 <div class="flex items-center justify-center h-screen">
-  <form (ngSubmit)="onSubmit()" class="bg-gray-800 shadow-xl rounded-xl p-6" >
+  <form (ngSubmit)="onSubmit()" class="bg-gray-800 shadow-xl rounded-xl p-6" *ngIf="!created">
     <div class="w-full">
       <p class="text-xl font-bold text-center pb-2">Create Listing</p>
 
@@ -151,17 +151,17 @@
 
       <div class="w-full px-3 pb-3" [formGroup]="yourForm">
         <input
+          (change)="onFileChange($event)"
           type="file"
           id="imageField"
           name="imageField"
           class="file-input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
           required
           accept="image/png"
-          (change)="handleFileInputChange($event)"
           formControlName="image"
         />
         <div role="alert" *ngIf="yourForm.controls['image'].errors?.['required']">
-          <p class="text-xs pt-2 text-red-500">Please select an .png image.</p>
+          <p class="text-xs pt-2 text-red-500">Please select a .png image.</p>
         </div>
       </div>
 
@@ -285,6 +285,18 @@
 
     </div>
   </form>
+
+  <div *ngIf="created">
+    <p>
+      The listing was successfully created!
+    </p>
+    <button type="button"
+            (click)="router.navigateByUrl('/')"
+            class="text-white flex mx-auto bottom-2.5 font-medium rounded-lg text-sm px-4 py-2 bg-primary hover:bg-secondary focus:ring-secondary">
+      OK
+    </button>
+  </div>
+
 </div>
 
 

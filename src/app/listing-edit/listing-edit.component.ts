@@ -7,6 +7,7 @@ import {Listing} from "../../entities/listing";
 import {ContactInfo} from "../../entities/contact-info";
 import {CATEGORIES, ListingService} from "../../services/listing.service";
 import {UserService} from "../../services/user.service";
+import {flush} from "@angular/core/testing";
 
 @Component({
   selector: 'app-listing-edit',
@@ -23,27 +24,23 @@ export class ListingEditComponent implements OnInit{
   router: Router = inject(Router);
   paramMap: ParamMap = this.route.snapshot.paramMap;
 
-  yourForm: FormGroup;
+  created = false;
 
-  id: string = '';
-  title: string = '';
-  description: string = '';
-  price: string = '';
+  id = '';
   contactInfo: ContactInfo = new ContactInfo('', '', '', '', '', '');
+  image: File | null = null;
 
   categories = CATEGORIES;
   catSelBoolArr = this.genCategorySelectBools();
 
-  file_store: FileList | null = null;
+  fb: FormBuilder = inject(FormBuilder);
 
-  constructor(private fb: FormBuilder) {
-    this.yourForm = this.fb.group({
-      title: new FormControl('', Validators.required),
-      description: new FormControl('', Validators.required),
-      price: new FormControl('', Validators.required),
-      image: new FormControl('', Validators.required),
-    });
-  }
+  yourForm = this.fb.group({
+    title: new FormControl('', Validators.required),
+    description: new FormControl('', Validators.required),
+    price: new FormControl('', Validators.required),
+    image: new FormControl('', Validators.required),
+  });
 
   genSelectedCategories() {
     let categories = [];
@@ -52,6 +49,14 @@ export class ListingEditComponent implements OnInit{
         categories.push(category);
     }
     return categories;
+  }
+
+  onFileChange(event: any) {
+    const fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      this.image = fileList[0]; // Assign the selected file to the 'image' variable
+      // You can perform additional actions if needed
+    }
   }
 
   genCategorySelectBools() {
@@ -63,41 +68,46 @@ export class ListingEditComponent implements OnInit{
   }
 
   ngOnInit() {
+    this.userService.getUser().subscribe(user => {
+      this.contactInfo = user.contactInfo;
+    })
   }
 
-  validatePriceFormat() {
-    const priceRegex = /^\d+(\.\d{1,2})?$/; // Regular expression for a number with maximum two decimal places
-    return priceRegex.test(this.price || '');
+  checkFormValidity(listing: Listing, image: File): boolean {
+    return (
+      !image ||
+      listing.categories.length < 1 ||
+      image.type !== "png" ||
+      !/^[\w\s\d\S]{1,100}$/.test(listing.title) ||
+      !/^[\w\s\d\S]{1,500}$/.test(listing.description) ||
+      !/\d+(\.\d{1,2})?$/.test(listing.price.toString()) ||
+      !/^[\p{L}\p{M}\s.'-]{1,40}$/u.test(listing.contactInfo.firstName) ||
+      !/^[\p{L}\p{M}\s.'-]{1,40}$/u.test(listing.contactInfo.lastName) ||
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(listing.contactInfo.email) ||
+      !/^[+]?[0-9]{0,14}$/.test(listing.contactInfo.phoneNumber) ||
+      !/^[\s\S]{0,100}$/u.test(listing.contactInfo.address) ||
+      !/^[0-9]{5}$/u.test(listing.contactInfo.postalCode)
+    );
   }
 
-  handleFileInputChange(event: any): void {
-    const files: FileList | null = event.target.files;
-
-    this.file_store = files;
-
-    if (files != null) {
-      if (files.length) {
-        const file = files[0];
-        const count = files.length > 1 ? `(+${files.length - 1} files)` : "";
-        this.yourForm.controls['image'].patchValue(`${file.name} ${count}`);
-      } else {
-        this.yourForm.controls['image'].patchValue('');
-      }
-    }
-  }
   onSubmit() {
     const categories: string[] = [];
     let listing = new Listing(
       this.userService.username,
-      this.title,
-      this.description,
-      Number.parseFloat(this.price),
+      this.yourForm.get("title")?.value || '',
+      this.yourForm.get("decription")?.value || '',
+      Number.parseFloat(this.yourForm.get("price")?.value || '',),
       this.genSelectedCategories(),
       '',
       this.contactInfo);
-    const action: string = this.paramMap.get('action') || 'post';
-    console.log(listing);
-    this.listingService.saveListing(listing, this.file_store, action).subscribe(success => {
-      console.log(success ? "successful" : "failed")});
+    if (this.image && this.checkFormValidity(listing, this.image)) {
+      const action: string = this.paramMap.get('action') || 'post';
+      this.listingService.saveListing(listing, action).subscribe(imageId => {
+        this.listingService.saveImage(this.image, imageId).subscribe( success => {
+          this.created = success;
+        })
+      })
+    }
+
   }
 }

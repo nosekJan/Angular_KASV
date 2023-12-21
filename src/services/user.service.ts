@@ -4,6 +4,7 @@ import {Auth} from "../entities/auth";
 import {catchError, EMPTY, map, Observable} from "rxjs";
 import {User} from "../entities/user";
 import {Router} from "@angular/router";
+import {Listing} from "../entities/listing";
 
 @Injectable({
   providedIn: 'root'
@@ -56,7 +57,6 @@ export class UserService {
   logout() {
     this.token = '';
     this.username = '';
-    console.log(this.router.url);
     if (this.restrictedUrlPatterns.test(this.router.url))
       this.router.navigateByUrl('/');
   }
@@ -73,6 +73,15 @@ export class UserService {
         catchError((error) => this.errorHandling(error)
         ),
       )
+  }
+
+  public getUser(): Observable<User> {
+    return this.http.get<User>(this.url + 'user/' + this.username, {headers:{Authorization: this.token}}).pipe(
+      map((userJson) =>
+        userJson
+      ),
+      catchError((error) => this.errorHandling(error)),
+    )
   }
 
   errorHandling(httpError: any): Observable<never> {

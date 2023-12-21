@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {catchError, EMPTY, map, Observable} from "rxjs";
+import {catchError, EMPTY, map, Observable, of, switchMap} from "rxjs";
 import {Listing} from "../entities/listing";
 import {UserService} from "./user.service";
 
@@ -25,19 +25,32 @@ export class ListingService {
     )
   }
 
-  public saveListing(listing: Listing, image: FileList | null, action: string) {
+  public saveListing(listing: Listing, action: string): Observable<any> {
     return this.http
-      .post<Listing>(this.url + action + "-listing", listing, {headers: {Authentication: this.token}})
+      .post(this.url + action + "-listing", listing, { headers: { Authentication: this.token }, responseType: "text"})
       .pipe(
-        map( imageId =>
-          this.http.post(this.url + 'upload-image/' + imageId, image?.item(0), {headers: {Authentication: this.token}})
+        map(imageId => {
+          return imageId}
         ),
-        catchError((error) => this.errorHandling(error)
-        )
+        catchError((error) => this.errorHandling(error))
+      );
+  }
+
+  public saveImage(image: File | null, imageId: string) {
+    const formData = new FormData();
+    if (image)
+      formData.append('file', image);
+    return this.http.post(this.url + 'upload-image/' + imageId, formData, { headers: { Authentication: this.token }, responseType: "text"})
+      .pipe(
+        map(() => {
+          return true;
+        }),
+        catchError((error) => this.errorHandling(error))
       );
   }
 
   errorHandling(httpError: any): Observable<never> {
+    alert("The server is down. Try again later.")
     return EMPTY;
   }
 
