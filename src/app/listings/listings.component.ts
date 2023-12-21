@@ -25,11 +25,11 @@ export class ListingsComponent implements OnInit {
 
   titleSearchString = '';
 
-  category = this.paramMap.get('category') === '-' ? '' : 'category=' + this.paramMap.get('category');
-  title = this.paramMap.get('title') === '-' ? '' : ',title=' + this.paramMap.get('title');
-  maxPrice = this.paramMap.get('maxPrice') === '-' ? '' : ',maxPrice=' + this.paramMap.get('maxPrice');
-  seller = this.paramMap.get('seller') === '-' ? '' : ',seller=' + this.paramMap.get('seller');
-  searchParams = '?' + this.category + this.title + this.maxPrice + this.seller;
+  category = this.paramMap.get('category');
+  title = this.paramMap.get('title');
+  maxPrice = this.paramMap.get('maxPrice');
+  seller = this.paramMap.get('seller');
+  searchParams = `?category=${this.category}&title=${this.title}&maxPrice=${this.maxPrice}&seller=${this.seller}`;
 
   listings: Listing[] = [];
 

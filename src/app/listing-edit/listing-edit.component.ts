@@ -54,8 +54,7 @@ export class ListingEditComponent implements OnInit{
   onFileChange(event: any) {
     const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
-      this.image = fileList[0]; // Assign the selected file to the 'image' variable
-      // You can perform additional actions if needed
+      this.image = fileList[0];
     }
   }
 
