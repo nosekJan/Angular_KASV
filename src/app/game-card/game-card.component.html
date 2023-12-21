@@ -1,11 +1,23 @@
-<div class="card w-96 bg-base-100 shadow-xl mx-auto transition duration-300 ease-in-out hover:scale-110 hover:bg-gray-800 cursor-pointer">
-  <figure><img class="" src="http://localhost:8080/get-image/{{listing.imageId}}" alt="game"/></figure>
-  <div class="card-body">
-    <h2 class="card-title">{{listing.title}}</h2>
-    <p>{{listing.price}}€</p>
-    <div class="card-actions justify-end">
-      <div *ngFor="let category of listing.categories" class="badge badge-outline border-primary">{{category}}</div>
-      <div class="badge badge-outline border-primary">{{listing.seller}}</div>
+<div class="card bg-base-100 shadow-xl my-6 mx-20 rounded-xl transform
+            transition duration-300 ease-in-out hover:scale-110 hover:bg-gray-800 cursor-pointer">
+  <div class="flex">
+    <figure><img class="h-56" src="http://localhost:8080/get-image/{{listing.imageId}}" alt="game"/></figure>
+
+    <div class="card-body">
+      <h2 class="card-title">{{listing.title}}</h2>
+      <div class="card-actions">
+        <p>{{listing.description}}</p>
+      </div>
     </div>
+
+    <div class="card-actions text-xl mt-5">
+      <p class="font-bold">{{listing.price}}€</p>
+      <p>{{listing.seller}}</p>
+    </div>
+
+  </div>
+
+  <div class="flex justify-start items-center mx-6 my-3">
+    <div *ngFor="let category of listing.categories" class="badge badge-outline border-primary">{{category}}</div>
   </div>
 </div>
