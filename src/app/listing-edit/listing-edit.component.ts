@@ -6,6 +6,7 @@ import {ActivatedRoute, ParamMap, Router, RouterLink} from "@angular/router";
 import {Listing} from "../../entities/listing";
 import {ContactInfo} from "../../entities/contact-info";
 import {CATEGORIES, ListingService} from "../../services/listing.service";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-listing-edit',
@@ -17,6 +18,7 @@ import {CATEGORIES, ListingService} from "../../services/listing.service";
 export class ListingEditComponent implements OnInit{
 
   listingService = inject(ListingService);
+  userService = inject(UserService);
   route: ActivatedRoute = inject(ActivatedRoute);
   router: Router = inject(Router);
   paramMap: ParamMap = this.route.snapshot.paramMap;
@@ -30,10 +32,7 @@ export class ListingEditComponent implements OnInit{
   contactInfo: ContactInfo = new ContactInfo('', '', '', '', '', '');
 
   categories = CATEGORIES;
-  category1 = '';
-  category2 = '';
-  category3 = '';
-  selectedCategories = '';
+  catSelBoolArr = this.genCategorySelectBools();
 
   file_store: FileList | null = null;
 
@@ -46,13 +45,24 @@ export class ListingEditComponent implements OnInit{
     });
   }
 
-  removeCategory(category: string) {
-    this.categories.splice(this.categories.indexOf(category), 1);
-    console.log(this.categories);
+  genSelectedCategories() {
+    let categories = [];
+    for (let category of this.categories) {
+      if (this.catSelBoolArr[this.categories.indexOf(category)])
+        categories.push(category);
+    }
+    return categories;
+  }
+
+  genCategorySelectBools() {
+    let selectedArray: boolean[] = [];
+    for (let i of this.categories) {
+      selectedArray.push(false);
+    }
+    return selectedArray;
   }
 
   ngOnInit() {
-    console.log(this.title=="")
   }
 
   validatePriceFormat() {
@@ -77,12 +87,17 @@ export class ListingEditComponent implements OnInit{
   }
   onSubmit() {
     const categories: string[] = [];
-    let listing = new Listing('', this.title, this.description, Number.parseFloat(this.price), categories,'', this.contactInfo);
+    let listing = new Listing(
+      this.userService.username,
+      this.title,
+      this.description,
+      Number.parseFloat(this.price),
+      this.genSelectedCategories(),
+      '',
+      this.contactInfo);
     const action: string = this.paramMap.get('action') || 'post';
     console.log(listing);
     this.listingService.saveListing(listing, this.file_store, action).subscribe(success => {
       console.log(success ? "successful" : "failed")});
   }
-
-    protected readonly CATEGORIES = CATEGORIES;
 }
