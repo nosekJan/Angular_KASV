@@ -1,15 +1,16 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {CommonModule, Location} from '@angular/common';
 import {MaterialModule} from "../../modules/material.module";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {Auth} from "../../entities/auth";
 import {UserService} from "../../services/user.service";
 import {Router, RouterLink} from "@angular/router";
+import {CATEGORIES} from "../../services/listing.service";
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, MaterialModule, FormsModule, RouterLink],
+    imports: [CommonModule, MaterialModule, FormsModule, RouterLink, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -25,4 +26,6 @@ export class LoginComponent{
       this.location.back();
     })
   }
+
+    protected readonly categories = CATEGORIES;
 }

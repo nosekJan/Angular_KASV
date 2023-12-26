@@ -32,3 +32,51 @@
     </mat-card-content>
   </mat-card>
 </form>
+
+<div class="flex items-center justify-center h-screen">
+  <form class="bg-gray-800 shadow-xl rounded-xl p-6">
+    <div class="w-full">
+      <p class="text-xl font-bold text-center pb-2">Welcome back !</p>
+
+      <div class="w-full px-3 pb-3">
+        <input
+          type="text"
+          id="username"
+          name="titleField"
+          placeholder="Username"
+          class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
+          required
+        />
+      </div>
+
+      <div class="w-full px-3 pb-3">
+        <input
+          type="password"
+          id="password"
+          name="titleField"
+          placeholder="Password"
+          class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
+          required
+        />
+      </div>
+
+    </div>
+
+    <div>
+      <button type="button"
+              class="text-white flex mx-auto bottom-2.5 font-medium rounded-lg text-sm px-4 py-2 bg-primary hover:bg-secondary focus:ring-secondary">
+        Sign In
+      </button>
+    </div>
+
+    <span
+      class="flex justify-center mx-auto">
+          You don't have an account? &nbsp;
+          <a routerLink="/register">
+            Sign Up here!
+          </a>
+    </span>
+
+  </form>
+
+</div>
