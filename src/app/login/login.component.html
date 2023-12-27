@@ -1,40 +1,5 @@
-<form (ngSubmit)="onSubmit()">
-  <mat-card class="example-card">
-    <mat-card-content>
-
-      <mat-card-header>
-        <mat-card-title>Log In</mat-card-title>
-      </mat-card-header>
-
-      <mat-form-field>
-        <mat-label>Username</mat-label>
-        <input matInput [(ngModel)]="auth.name" name="username">
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>Password</mat-label>
-        <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="auth.password" name="password">
-        <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-      </mat-form-field>
-
-      <mat-card-actions>
-        <button type="submit" mat-raised-button color="primary">Log In</button>
-        <span>
-          You don't have an account?
-          <a routerLink="/register">
-            Sign Up here!
-          </a>
-        </span>
-      </mat-card-actions>
-
-    </mat-card-content>
-  </mat-card>
-</form>
-
 <div class="flex items-center justify-center h-screen">
-  <form class="bg-gray-800 shadow-xl rounded-xl p-6">
+  <form (ngSubmit)="onSubmit()" class="bg-gray-800 shadow-xl rounded-xl p-6">
     <div class="w-full">
       <p class="text-xl font-bold text-center pb-2">Welcome back !</p>
 
@@ -42,10 +7,11 @@
         <input
           type="text"
           id="username"
-          name="titleField"
+          name="username"
           placeholder="Username"
           class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
           required
+          [(ngModel)]="auth.name"
         />
       </div>
 
@@ -53,17 +19,18 @@
         <input
           type="password"
           id="password"
-          name="titleField"
+          name="password"
           placeholder="Password"
           class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
           required
+          [(ngModel)]="auth.password"
         />
       </div>
 
     </div>
 
     <div>
-      <button type="button"
+      <button type="submit"
               class="text-white flex mx-auto bottom-2.5 font-medium rounded-lg text-sm px-4 py-2 bg-primary hover:bg-secondary focus:ring-secondary">
         Sign In
       </button>
@@ -78,5 +45,4 @@
     </span>
 
   </form>
-
 </div>
