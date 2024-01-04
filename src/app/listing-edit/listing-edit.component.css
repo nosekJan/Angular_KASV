@@ -1,6 +1,6 @@
 form {
-  width: 400px;
   margin: auto;
+  margin-top: 100px;
   align-content: center;
 }
 
@@ -32,7 +32,6 @@ mat-card-actions{
 }
 
 span{
-  padding-top: 20px;
   font-size: 15px;
   color: var(--mdc-filled-text-field-active-indicator-color);
   font-family: var(--mat-form-field-container-text-font);
@@ -49,4 +48,13 @@ mat-panel-title{
 
 mat-expansion-panel{
   margin-bottom: 10px;
+}
+
+input:invalid {
+  color: red;
+  caret-color: var(--mdc-filled-text-field-active-indicator-color);
+}
+
+input[type=file]:invalid {
+  color: inherit;
 }

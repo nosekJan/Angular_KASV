@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {catchError, EMPTY, map, Observable, of, switchMap} from "rxjs";
 import {Listing} from "../entities/listing";
 import {UserService} from "./user.service";
+import {User} from "../entities/user";
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,15 @@ export class ListingService {
     )
   }
 
+  public getListing(id: string): Observable<Listing> {
+    return this.http.get<Listing>(this.url + 'listing/' + id, {headers:{Authorization: this.token}}).pipe(
+      map((listingJson) =>
+        listingJson
+      ),
+      catchError((error) => this.errorHandling(error)),
+    )
+  }
+
   public saveListing(listing: Listing, action: string): Observable<any> {
     return this.http
       .post(this.url + action + "-listing", listing, { headers: { Authentication: this.token }, responseType: "text"})
@@ -40,13 +50,24 @@ export class ListingService {
     const formData = new FormData();
     if (image)
       formData.append('file', image);
-    return this.http.post(this.url + 'upload-image/' + imageId, formData, { headers: { Authentication: this.token }, responseType: "text"})
+    return this.http.post(this.url + 'upload-image/' + imageId, formData,
+                  { headers: { Authentication: this.token},
+                          responseType: "text"})
       .pipe(
         map(() => {
           return true;
         }),
         catchError((error) => this.errorHandling(error))
       );
+  }
+
+  public getImage(id: string): Observable<File> {
+    return this.http.get<File>(this.url + 'get-image/' + id, {headers:{Authorization: this.token}}).pipe(
+      map((image) =>
+        image
+      ),
+      catchError((error) => this.errorHandling(error)),
+    )
   }
 
   errorHandling(httpError: any): Observable<never> {

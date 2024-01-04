@@ -1,12 +1,11 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {GameCardComponent} from "../game-card/game-card.component";
 import {CATEGORIES, ListingService} from "../../services/listing.service";
 import {ActivatedRoute, NavigationEnd, ParamMap, Router, RouterLink} from "@angular/router";
 import {Listing} from "../../entities/listing";
-import {UserService} from "../../services/user.service";
-import {switchMap} from "rxjs";
 import {FormsModule} from "@angular/forms";
+import {filter} from "rxjs";
 
 @Component({
   selector: 'app-listings',
@@ -17,37 +16,84 @@ import {FormsModule} from "@angular/forms";
 })
 export class ListingsComponent implements OnInit {
 
-  categories = CATEGORIES;
   listingService: ListingService = inject(ListingService);
   route: ActivatedRoute = inject(ActivatedRoute);
   router: Router = inject(Router);
-  paramMap: ParamMap = this.route.snapshot.paramMap;
 
-  titleSearchString = '';
-
-  category = this.paramMap.get('category');
-  title = this.paramMap.get('title');
-  maxPrice = this.paramMap.get('maxPrice');
-  seller = this.paramMap.get('seller');
-  searchParams = `?category=${this.category}&title=${this.title}&maxPrice=${this.maxPrice}&seller=${this.seller}`;
+  maxPriceLimit = 300;
+  selectedCategory = '';
+  titleSearch = '';
 
   listings: Listing[] = [];
 
   ngOnInit() {
-    this.listingService.getListings(this.searchParams)
-      .subscribe(listings => this.listings = listings);
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        window.location.reload();
-      }
+    this.loadListings();
+
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      // Perform actions when the URL changes
+      this.handleUrlChange();
     });
   }
 
-
-
-  searchByTitle() {
-
+  loadListings() {
+    this.listingService.getListings(this.generateParams())
+      .subscribe(listings => {
+        this.listings = listings;
+      });
   }
 
-  protected readonly Listing = Listing;
+  handleUrlChange() {
+    this.loadListings();
+
+    const paramMap: ParamMap = this.route.snapshot.paramMap;
+
+    const category = paramMap.get('category');
+    this.selectCategory(category || '', true);
+
+    const maxPrice = paramMap.get('maxPrice');
+    this.maxPriceLimit = maxPrice && maxPrice != '-' ? Number.parseInt(maxPrice) : 300;
+
+    const title = paramMap.get('title');
+    this.titleSearch = title && title != '-' ? title : '';
+  }
+
+  selectCategory(category: string, set: boolean) {
+    const selectedBtn = document.getElementById(category);
+    const buttons = document.getElementsByClassName("category-select-btn");
+
+    if (buttons) {
+      for (let i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove("active");
+      }
+    }
+
+    if (selectedBtn && this.selectedCategory != category) {
+      selectedBtn.classList.add("active");
+      this.selectedCategory =  category;
+    }
+    else if (selectedBtn && !set){
+      this.selectedCategory = '';
+      selectedBtn.classList.remove("active");
+    }
+  }
+
+  generateParams() {
+    const paramMap: ParamMap = this.route.snapshot.paramMap;
+    const category = paramMap.get('category');
+    const title = paramMap.get('title');
+    const maxPrice = paramMap.get('maxPrice');
+    const seller = paramMap.get('seller');
+    return `?category=${category}&title=${title}&maxPrice=${maxPrice}&seller=${seller}`;
+  }
+
+  search() {
+    const category = this.selectedCategory ? this.selectedCategory : '-';
+    const price = this.maxPriceLimit < 300 ? this.maxPriceLimit : '-';
+    const title = this.titleSearch ? this.titleSearch : '-';
+    this.router.navigateByUrl(`listings/${category}/${title}/${price}/-`);
+  }
+
+  protected readonly CATEGORIES = CATEGORIES;
 }

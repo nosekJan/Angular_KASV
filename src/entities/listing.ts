@@ -13,6 +13,7 @@ export class Listing {
     public price: number,
     public categories: string[],
     public imageId: string,
-    public contactInfo: ContactInfo
+    public contactInfo: ContactInfo,
+    public id?: string
   ) {}
 }

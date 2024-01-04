@@ -1,290 +1,222 @@
-<!--<form (ngSubmit)="onSubmit()" #myForm="ngForm">
-  <mat-card class="example-card">
-    <mat-card-content>
-
-      <mat-card-header>
-        <mat-card-title>Create listing</mat-card-title>
-      </mat-card-header>
-
-      <mat-form-field>
-        <mat-label>Title</mat-label>
-        <input matInput name="title" [(ngModel)]="title" required #titleField="ngModel">
-        <mat-error *ngIf="titleField.errors?.['required'] && titleField.touched">
-          This field is required
-        </mat-error>
-      </mat-form-field>
-
-      &lt;!&ndash; Description &ndash;&gt;
-      <mat-form-field>
-        <mat-label>Description</mat-label>
-        <textarea matInput name="description" [(ngModel)]="description" required #descriptionField="ngModel"></textarea>
-        <mat-error *ngIf="descriptionField.errors?.['required'] && descriptionField.touched">
-          This field is required
-        </mat-error>
-      </mat-form-field>
-
-      &lt;!&ndash; Price &ndash;&gt;
-      <mat-form-field>
-        <mat-label>Price (EUR)</mat-label>
-        <input matInput name="price" [(ngModel)]="price" required #priceField="ngModel" pattern="^\d+(\.\d{1,2})?$">
-        <mat-error *ngIf="priceField.errors?.['required'] && priceField.touched">
-          Define the price in the format 00.00
-        </mat-error>
-      </mat-form-field>
-
-      &lt;!&ndash; Other input fields... &ndash;&gt;
-
-      <mat-form-field>
-        <mat-label>Image</mat-label>
-        <button mat-icon-button matPrefix (click)="f_input.click()">
-          <mat-icon>attach_file</mat-icon>
-        </button>
-        <input type="text" readonly matInput [formControl]=""/>
-        <input
-          type="file"
-          hidden
-          #f_input
-          accept="image/png"
-          (change)="handleFileInputChange(f_input.files)"
-        />
-        <mat-error>You must select an image for the listing</mat-error>
-      </mat-form-field>
-
-      <mat-expansion-panel>
-
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Contact info (min. 2 fields required)
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-
-        <mat-form-field>
-          <mat-label>First name</mat-label>
-          <input matInput [(ngModel)]="contactInfo.firstName" name="firstName">
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Last name</mat-label>
-          <input matInput [(ngModel)]="contactInfo.lastName" name="lastName">
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Email</mat-label>
-          <input matInput [(ngModel)]="contactInfo.email" name="email">
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Phone number</mat-label>
-          <input matInput [(ngModel)]="contactInfo.phoneNumber" name="phoneNumber">
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Address</mat-label>
-          <input matInput [(ngModel)]="contactInfo.address" name="address">
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Postal code</mat-label>
-          <input matInput [(ngModel)]="contactInfo.postalCode" name="postalCode">
-        </mat-form-field>
-
-      </mat-expansion-panel>
-
-      <mat-card-actions>
-        <button type="submit" mat-raised-button color="primary">Publish</button>
-      </mat-card-actions>
-
-    </mat-card-content>
-  </mat-card>
-</form>-->
-
 <div class="flex items-center justify-center h-screen">
-  <form (ngSubmit)="onSubmit()" class="bg-gray-800 shadow-xl rounded-xl p-6" *ngIf="!created">
-    <div class="w-full">
-      <p class="text-xl font-bold text-center pb-2">Create Listing</p>
+  <form (ngSubmit)="onSubmit()" class="flex flex-col w-1000 bg-gray-800 shadow-xl rounded-xl p-6" *ngIf="!created">
+    <div role="alert" *ngIf="showError">
+      <p class="text-lg text-red-500 text-center mb-2">Please fill out all fields with valid data!</p>
+    </div>
+    <div class="flex flex-row">
+      <div class="w-80">
+        <p class="text-xl font-bold text-center pb-2">Listing info</p>
 
-      <div class="w-full px-3 pb-3" [formGroup]="yourForm">
-        <input type="text"
-               id="titleField"
-               name="titleField"
-               placeholder="Title"
-               class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
-               required
-               formControlName="title"
-        />
+        <div class="w-full px-3 pb-3" [formGroup]="yourForm">
+          <input type="text"
+                 id="titleField"
+                 name="titleField"
+                 placeholder="Title"
+                 class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
+                 required
+                 maxlength="100"
+                 pattern="^[\w\s\d\S]{1,100}$"
+                 formControlName="title"
+          />
 
-        <div role="alert" *ngIf="yourForm.controls['title'].errors?.['required'] && yourForm.controls['title'].touched">
-          <p class="text-xs pt-2 text-red-500">Please fill out this field.</p>
+          <div role="alert" *ngIf="yourForm.controls['title'].errors?.['required'] && yourForm.controls['title'].touched">
+            <p class="text-xs pt-2 text-red-500">Please give a title for the listing.</p>
+          </div>
         </div>
-      </div>
 
-      <div class="w-full px-3 pb-3" [formGroup]="yourForm">
+        <div class="w-full px-3 pb-3" [formGroup]="yourForm">
         <textarea
           id="descriptionField"
           name="descriptionField"
           placeholder="Description"
           class="textarea hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
+          maxlength="400"
           required
+          pattern="^[\w\s\d\S]{1,400}$"
           formControlName="description"
         ></textarea>
-        <div role="alert" *ngIf="yourForm.controls['description'].errors?.['required'] && yourForm.controls['description'].touched">
-          <p class="text-xs pt-2 text-red-500">Please fill out this field.</p>
+          <div role="alert" *ngIf="yourForm.controls['description'].errors?.['required'] && yourForm.controls['description'].touched">
+            <p class="text-xs pt-2 text-red-500">Please write a short description.</p>
+          </div>
         </div>
-      </div>
 
-      <div class="w-full px-3 pb-3" [formGroup]="yourForm">
-        <input
-          type="number"
-          id="priceField"
-          name="priceField"
-          placeholder="Price (EUR)"
-          class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
-          required
-          formControlName="price"
-        />
-        <div role="alert" *ngIf="yourForm.controls['price'].errors?.['required'] && yourForm.controls['price'].touched">
-          <p class="text-xs pt-2 text-red-500">Please fill out this field.</p>
-        </div>
-      </div>
-
-      <div class="w-full px-3 pb-3" [formGroup]="yourForm">
-        <input
-          (change)="onFileChange($event)"
-          type="file"
-          id="imageField"
-          name="imageField"
-          class="file-input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
-          required
-          accept="image/png"
-          formControlName="image"
-        />
-        <div role="alert" *ngIf="yourForm.controls['image'].errors?.['required']">
-          <p class="text-xs pt-2 text-red-500">Please select a .png image.</p>
-        </div>
-      </div>
-
-      <div class="form-control" *ngFor="let category of categories">
-        <label class="label cursor-pointer">
-          <span class="label-text">{{category}}</span>
-          <input type="checkbox" checked="checked"
-                 class="checkbox checkbox-primary"
-                 [(ngModel)]="catSelBoolArr[categories.indexOf(category)]"
-                 name="categorySelector"/>
-        </label>
-      </div>
-
-      <p class="text-lg font-bold text-center pb-2">Contact info</p>
-
-      <div class="grid grid-cols-2">
-        <div class="w-full px-3 pb-3">
+        <div class="w-full px-3 pb-3" [formGroup]="yourForm">
           <input
             type="text"
-            id="firstNameField"
-            name="firstNameField"
-            placeholder="First name"
+            id="priceField"
+            name="priceField"
+            placeholder="Price (EUR)"
             class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
             required
-            [(ngModel)]="contactInfo.firstName"
-            #firstNameField="ngModel"
+            pattern="\d+(\.\d{1,2})?$"
+            formControlName="price"
           />
-          <div role="alert" *ngIf="firstNameField.errors?.['required'] && firstNameField.touched">
-            <p class="text-red-500 text-xs pt-2">Please fill out this field.</p>
+          <div role="alert" *ngIf="yourForm.controls['price'].errors?.['required'] && yourForm.controls['price'].touched">
+            <p class="text-xs pt-2 text-red-500">Please enter a number.</p>
           </div>
         </div>
 
-        <div class="w-full px-3 pb-3">
+        <div class="w-full px-3 pb-3" [formGroup]="yourForm">
           <input
-            type="text"
-            id="lastNameField"
-            name="lastNameField"
-            placeholder="Last name"
-            class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
+            (change)="onFileChange($event)"
+            type="file"
+            id="imageField"
+            name="imageField"
+            class="file-input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
             required
-            [(ngModel)]="contactInfo.lastName"
-            #lastNameField="ngModel"
+            accept="image/png"
+            formControlName="image"
           />
-          <div role="alert" *ngIf="lastNameField.errors?.['required'] && lastNameField.touched">
-            <p class="text-red-500 text-xs pt-2">Please fill out this field.</p>
-          </div>
-        </div>
-
-        <div class="w-full px-3 pb-3">
-          <input
-            type="email"
-            id="emailField"
-            name="emailField"
-            placeholder="Email"
-            class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
-            required
-            [(ngModel)]="contactInfo.email"
-            #emailField="ngModel"
-          />
-          <div role="alert" *ngIf="emailField.errors?.['required'] && emailField.touched">
-            <p class="text-red-500 text-xs pt-2">Please fill out this field.</p>
-          </div>
-        </div>
-
-        <div class="w-full px-3 pb-3">
-          <input
-            type="text"
-            id="phoneNumberField"
-            name="phoneNumberField"
-            placeholder="Phone number"
-            class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
-            required
-            [(ngModel)]="contactInfo.phoneNumber"
-            #phoneNumberField="ngModel"
-          />
-          <div role="alert" *ngIf="phoneNumberField.errors?.['required'] && phoneNumberField.touched">
-            <p class="text-red-500 text-xs pt-2">Please fill out this field.</p>
-          </div>
-        </div>
-
-        <div class="w-full px-3 pb-3">
-          <input
-            type="text"
-            id="addressField"
-            name="addressField"
-            placeholder="Address"
-            class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
-            required
-            [(ngModel)]="contactInfo.address"
-            #addressField="ngModel"
-          />
-          <div role="alert" *ngIf="addressField.errors?.['required'] && addressField.touched">
-            <p class="text-red-500 text-xs pt-2">Please fill out this field.</p>
-          </div>
-        </div>
-
-        <div class="w-full px-3 pb-3">
-          <input
-            type="number"
-            id="postalCodeField"
-            name="postalCodeField"
-            placeholder="Postal code"
-            class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
-            required
-            [(ngModel)]="contactInfo.postalCode"
-            #postalCodeField="ngModel"
-          />
-          <div role="alert" *ngIf="postalCodeField.errors?.['required'] && postalCodeField.touched">
-            <p class="text-red-500 text-xs pt-2">Please fill out this field.</p>
+          <div role="alert" *ngIf="(yourForm.controls['image'].errors?.['required'] || imageTooLarge)
+                                  && yourForm.controls['image'].touched">
+            <p class="text-xs pt-2 text-red-500">Please select a .png image (maximum 5MB)</p>
           </div>
         </div>
 
       </div>
 
-      <div>
-        <button type="submit"
-                class="text-white flex mx-auto bottom-2.5 font-medium rounded-lg text-sm px-4 py-2 bg-primary hover:bg-secondary focus:ring-secondary">
-          Publish
-        </button>
+      <div class="w-40 px-3 border-x border-gray-700">
+        <p class="text-xl font-bold text-center pb-2">Categories</p>
+
+        <div class="max-h-72 overflow-scroll">
+
+          <div class="form-control" *ngFor="let category of categories">
+            <label class="label cursor-pointer">
+              <span class="label-text">{{category}}</span>
+              <input type="checkbox"
+                     id="{{category}}"
+                     class="checkbox checkbox-primary"
+                      (change)="selectCategory(category)"/>
+            </label>
+          </div>
+          <div role="alert" *ngIf="!categorySelected">
+            <p class="text-xs pt-2 text-red-500">Please select at least 1 category</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-80">
+        <p class="text-lg font-bold text-center pb-2">Contact info</p>
+
+        <div class="grid grid-cols-2">
+          <div class="w-full px-3 pb-3">
+            <input
+              type="text"
+              id="firstNameField"
+              name="firstNameField"
+              placeholder="First name"
+              class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
+              required
+              pattern="^[\p{L}\p{M}\s]{1,40}$"
+              [(ngModel)]="contactInfo.firstName"
+              #firstNameField="ngModel"
+            />
+            <div role="alert" *ngIf="firstNameField.errors?.['required'] && firstNameField.touched">
+              <p class="text-red-500 text-xs pt-2">Please fill out this field.</p>
+            </div>
+          </div>
+
+          <div class="w-full px-3 pb-3">
+            <input
+              type="text"
+              id="lastNameField"
+              name="lastNameField"
+              placeholder="Last name"
+              class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
+              pattern="^[\p{L}\p{M}\s]{1,40}$"
+              required
+              [(ngModel)]="contactInfo.lastName"
+              #lastNameField="ngModel"
+            />
+            <div role="alert" *ngIf="lastNameField.errors?.['required'] && lastNameField.touched">
+              <p class="text-red-500 text-xs pt-2">Please fill out this field.</p>
+            </div>
+          </div>
+
+          <div class="w-full px-3 pb-3">
+            <input
+              type="email"
+              id="emailField"
+              name="emailField"
+              placeholder="Email"
+              class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
+              required
+              pattern="[^\s@]+@[^\s@]+"
+              [(ngModel)]="contactInfo.email"
+              #emailField="ngModel"
+            />
+            <div role="alert" *ngIf="emailField.errors?.['required'] && emailField.touched">
+              <p class="text-red-500 text-xs pt-2">Please fill out this field.</p>
+            </div>
+          </div>
+
+          <div class="w-full px-3 pb-3">
+            <input
+              type="text"
+              id="phoneNumberField"
+              name="phoneNumberField"
+              placeholder="Phone number"
+              class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
+              required
+              pattern="^[+]?[0-9]{0,14}$"
+              [(ngModel)]="contactInfo.phoneNumber"
+              #phoneNumberField="ngModel"
+            />
+            <div role="alert" *ngIf="phoneNumberField.errors?.['required'] && phoneNumberField.touched">
+              <p class="text-red-500 text-xs pt-2">Please fill out this field.</p>
+            </div>
+          </div>
+
+          <div class="w-full px-3 pb-3">
+            <input
+              type="text"
+              id="addressField"
+              name="addressField"
+              placeholder="Address"
+              class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
+              required
+              pattern="^[\s\S]{0,100}$"
+              [(ngModel)]="contactInfo.address"
+              #addressField="ngModel"
+            />
+            <div role="alert" *ngIf="addressField.errors?.['required'] && addressField.touched">
+              <p class="text-red-500 text-xs pt-2">Please fill out this field.</p>
+            </div>
+          </div>
+
+          <div class="w-full px-3 pb-3">
+            <input
+              type="text"
+              id="postalCodeField"
+              name="postalCodeField"
+              placeholder="Postal code"
+              class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
+              required
+              pattern="^[0-9]{5}$"
+              [(ngModel)]="contactInfo.postalCode"
+              #postalCodeField="ngModel"
+            />
+            <div role="alert" *ngIf="postalCodeField.errors?.['required'] && postalCodeField.touched">
+              <p class="text-red-500 text-xs pt-2">Please fill out this field.</p>
+            </div>
+          </div>
+
+        </div>
       </div>
 
     </div>
+
+
+    <div>
+      <button type="submit"
+              class="text-white flex mx-auto bottom-2.5 font-medium rounded-lg text-sm px-4 py-2 bg-primary hover:bg-secondary focus:ring-secondary">
+        Publish
+      </button>
+    </div>
+
   </form>
 
-  <div *ngIf="created">
+  <div *ngIf="created" class="flex flex-col bg-gray-800 shadow-xl rounded-xl p-6">
     <p>
       The listing was successfully created!
     </p>
