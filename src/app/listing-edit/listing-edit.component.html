@@ -99,7 +99,8 @@
         <p class="text-lg font-bold text-center pb-2">Contact info</p>
 
         <div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 ">
-          <div class="w-full px-3 pb-3">
+
+          <div class="w-full px-3 pb-3" [formGroup]="yourForm">
             <input
               type="text"
               id="firstNameField"
@@ -108,15 +109,15 @@
               class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
               required
               pattern="^[\p{L}\p{M}\s]{1,40}$"
-              [(ngModel)]="contactInfo.firstName"
-              #firstNameField="ngModel"
+              formControlName="firstName"
             />
-            <div role="alert" *ngIf="firstNameField.errors?.['required'] && firstNameField.touched">
+            <div role="alert" *ngIf="yourForm.controls['firstName'].errors?.['required'] &&
+                                     yourForm.controls['firstName'].touched">
               <p class="text-red-500 text-xs pt-2">Please fill out this field.</p>
             </div>
           </div>
 
-          <div class="w-full px-3 pb-3">
+          <div class="w-full px-3 pb-3" [formGroup]="yourForm">
             <input
               type="text"
               id="lastNameField"
@@ -125,15 +126,15 @@
               class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
               pattern="^[\p{L}\p{M}\s]{1,40}$"
               required
-              [(ngModel)]="contactInfo.lastName"
-              #lastNameField="ngModel"
+              formControlName="lastName"
             />
-            <div role="alert" *ngIf="lastNameField.errors?.['required'] && lastNameField.touched">
+            <div role="alert" *ngIf="yourForm.controls['lastName'].errors?.['required'] &&
+                                     yourForm.controls['lastName'].touched">
               <p class="text-red-500 text-xs pt-2">Please fill out this field.</p>
             </div>
           </div>
 
-          <div class="w-full px-3 pb-3">
+          <div class="w-full px-3 pb-3" [formGroup]="yourForm">
             <input
               type="email"
               id="emailField"
@@ -142,15 +143,15 @@
               class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
               required
               pattern="[^\s@]+@[^\s@]+"
-              [(ngModel)]="contactInfo.email"
-              #emailField="ngModel"
+              formControlName="email"
             />
-            <div role="alert" *ngIf="emailField.errors?.['required'] && emailField.touched">
+            <div role="alert" *ngIf="yourForm.controls['email'].errors?.['required'] &&
+                                     yourForm.controls['email'].touched">
               <p class="text-red-500 text-xs pt-2">Please fill out this field.</p>
             </div>
           </div>
 
-          <div class="w-full px-3 pb-3">
+          <div class="w-full px-3 pb-3" [formGroup]="yourForm">
             <input
               type="text"
               id="phoneNumberField"
@@ -159,15 +160,15 @@
               class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
               required
               pattern="^[+]?[0-9]{0,14}$"
-              [(ngModel)]="contactInfo.phoneNumber"
-              #phoneNumberField="ngModel"
+              formControlName="phoneNumber"
             />
-            <div role="alert" *ngIf="phoneNumberField.errors?.['required'] && phoneNumberField.touched">
+            <div role="alert" *ngIf="yourForm.controls['phoneNumber'].errors?.['required'] &&
+                                     yourForm.controls['phoneNumber'].touched">
               <p class="text-red-500 text-xs pt-2">Please fill out this field.</p>
             </div>
           </div>
 
-          <div class="w-full px-3 pb-3">
+          <div class="w-full px-3 pb-3" [formGroup]="yourForm">
             <input
               type="text"
               id="addressField"
@@ -176,15 +177,15 @@
               class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
               required
               pattern="^[\s\S]{0,100}$"
-              [(ngModel)]="contactInfo.address"
-              #addressField="ngModel"
+              formControlName="address"
             />
-            <div role="alert" *ngIf="addressField.errors?.['required'] && addressField.touched">
+            <div role="alert" *ngIf="yourForm.controls['address'].errors?.['required'] &&
+                                     yourForm.controls['address'].touched">
               <p class="text-red-500 text-xs pt-2">Please fill out this field.</p>
             </div>
           </div>
 
-          <div class="w-full px-3 pb-3">
+          <div class="w-full px-3 pb-3" [formGroup]="yourForm">
             <input
               type="text"
               id="postalCodeField"
@@ -193,10 +194,10 @@
               class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
               required
               pattern="^[0-9]{5}$"
-              [(ngModel)]="contactInfo.postalCode"
-              #postalCodeField="ngModel"
+              formControlName="postalCode"
             />
-            <div role="alert" *ngIf="postalCodeField.errors?.['required'] && postalCodeField.touched">
+            <div role="alert" *ngIf="yourForm.controls['postalCode'].errors?.['required'] &&
+                                     yourForm.controls['postalCode'].touched">
               <p class="text-red-500 text-xs pt-2">Please fill out this field.</p>
             </div>
           </div>

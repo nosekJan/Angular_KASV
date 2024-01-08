@@ -33,7 +33,6 @@ export class ListingEditComponent implements OnInit{
 
   created = false;
 
-  contactInfo: ContactInfo = new ContactInfo('', '', '', '', '', '');
   image: File | null = null;
   imageTooLarge = false;
 
@@ -72,10 +71,6 @@ export class ListingEditComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.userService.getUser().subscribe(user => {
-      this.contactInfo = user.contactInfo;
-    })
-
     if (this.id != null) {
       this.listingService.getListing(this.id).subscribe(listing => {
         this.listing = listing;
@@ -83,8 +78,7 @@ export class ListingEditComponent implements OnInit{
         this.yourForm.get('title')?.setValue(listing.title);
         this.yourForm.get('description')?.setValue(listing.description);
         this.yourForm.get('price')?.setValue(listing.price.toString());
-
-        this.contactInfo = listing.contactInfo;
+        this.loadContactInfo(listing.contactInfo);
 
         this.selectedCategories = listing.categories;
         listing.categories.forEach(category => {
@@ -94,6 +88,20 @@ export class ListingEditComponent implements OnInit{
         })
       })
     }
+    else {
+      this.userService.getUser().subscribe(user => {
+        this.loadContactInfo(user.contactInfo);
+      })
+    }
+  }
+
+  loadContactInfo(contactInfo: ContactInfo) {
+    this.yourForm.get('firstName')?.setValue(contactInfo.firstName);
+    this.yourForm.get('lastName')?.setValue(contactInfo.lastName);
+    this.yourForm.get('email')?.setValue(contactInfo.email);
+    this.yourForm.get('phoneNumber')?.setValue(contactInfo.phoneNumber);
+    this.yourForm.get('address')?.setValue(contactInfo.address);
+    this.yourForm.get('postalCode')?.setValue(contactInfo.postalCode);
   }
 
   checkImageValidity(): boolean {
@@ -115,7 +123,14 @@ export class ListingEditComponent implements OnInit{
       Number.parseFloat(this.yourForm.get("price")?.value || '',),
       this.selectedCategories,
       '',
-      this.contactInfo);
+      new ContactInfo(
+        this.yourForm.get("phoneNumber")?.value || '',
+        this.yourForm.get("firstName")?.value || '',
+        this.yourForm.get("lastName")?.value || '',
+        this.yourForm.get("email")?.value || '',
+        this.yourForm.get("address")?.value || '',
+        this.yourForm.get("postalCode")?.value || '',
+      ));
 
     if (this.listing) {
       listing.id = this.listing.id;

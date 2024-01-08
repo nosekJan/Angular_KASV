@@ -43,12 +43,12 @@ export class GameCardComponent{
   }
 
   deleteListing(id: string | undefined) {
-    console.log(id);
     if (id)
-      this.listingService.deleteListing(id);
-  }
-
-  log(id: string | undefined) {
-    console.log(id);
+      this.listingService.deleteListing(id).subscribe(success => {
+        if (success)
+          location.reload();
+        else
+          alert("Error! Try again later.");
+      });
   }
 }

@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {catchError, EMPTY, map, Observable, of, switchMap} from "rxjs";
+import {catchError, EMPTY, map, Observable, of, retry, switchMap} from "rxjs";
 import {Listing} from "../entities/listing";
 import {UserService} from "./user.service";
 import {User} from "../entities/user";
@@ -47,9 +47,14 @@ export class ListingService {
   }
 
   public deleteListing(id: string): Observable<any> {
-    return this.http.delete<Listing>(this.url + 'delete-listing/' + id, {headers:{Authorization: this.token}}).pipe(
-      catchError((error) => this.errorHandling(error)),
-    )
+    return this.http
+      .delete(this.url + 'delete-listing/' + id, {headers:{Authorization: this.token}})
+      .pipe(
+        map(() => {
+          return true;
+        }),
+        catchError((error) => this.errorHandling(error))
+    );
   }
 
   public saveImage(image: File | null, imageId: string) {
