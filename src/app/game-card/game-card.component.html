@@ -9,7 +9,29 @@
 
     <div class="flex flex-col flex-1 p-6 md:justify-between">
       <div class="mb-4">
-        <h2 class="text-2xl md:text-xl lg:text-2xl font-bold">{{listing.title}}</h2>
+        <div class="flex justify-between">
+          <h2 class="text-2xl md:text-xl lg:text-2xl font-bold">{{listing.title}}</h2>
+          <div *ngIf="isUsersListing(listing.seller)">
+            <a
+              routerLink="/listing-edit/{{listing.id}}">
+              <ng-icon name="featherEdit" ></ng-icon>
+            </a>
+            <span>
+              <ng-icon name="featherTrash2" onclick="delete_dialog.showModal()"></ng-icon>
+              <dialog id="delete_dialog" class="modal">
+                <div class="modal-box">
+                  <h3 class="font-bold text-lg text-center">Are you sure you want to delete this listing?</h3>
+                  <div class="modal-action justify-center">
+                    <form method="dialog">
+                      <button class="btn mx-2">Cancel</button>
+                    </form>
+                    <button class="btn mx-2" (click)="deleteListing(listing.id)">Accept</button>
+                  </div>
+                </div>
+              </dialog>
+            </span>
+          </div>
+        </div>
         <div class="text-base md:text-md overflow-y-auto max-h-32">
           {{listing.description}}
         </div>
@@ -20,7 +42,7 @@
           <p class="font-bold">{{listing.price}}€</p>
           <a
             [routerLink]="['/listings','-','-','-',listing.seller]"
-            (click)="onLinkClick(listing.seller)"
+            (click)="searchBySeller(listing.seller)"
             class="btn btn-neutral btn-sm">
             {{listing.seller}}
           </a>

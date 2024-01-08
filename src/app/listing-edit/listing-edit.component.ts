@@ -48,6 +48,12 @@ export class ListingEditComponent implements OnInit{
     description: new FormControl('', [Validators.required, Validators.pattern(/^[\w\s\d\S]{1,500}$/)]),
     price: new FormControl('', [Validators.required, Validators.pattern(/\d+(\.\d{1,2})?$/)]),
     image: new FormControl('', Validators.required),
+    firstName: new FormControl('',[Validators.required, Validators.pattern(/^[\p{L}\p{M}\s.'-]{1,40}$/u)]),
+    lastName: new FormControl('',[Validators.required, Validators.pattern(/^[\p{L}\p{M}\s.'-]{1,40}$/u)]),
+    email: new FormControl('',[Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]),
+    phoneNumber: new FormControl('',[Validators.required, Validators.pattern(/^[+]?[0-9]{0,14}$/)]),
+    address: new FormControl('',[Validators.required, Validators.pattern(/^[\s\S]{0,100}$/u)]),
+    postalCode: new FormControl('',[Validators.required, Validators.pattern(/^[0-9]{5}$/u)]),
   });
 
   selectCategory(category: string) {
@@ -73,11 +79,14 @@ export class ListingEditComponent implements OnInit{
     if (this.id != null) {
       this.listingService.getListing(this.id).subscribe(listing => {
         this.listing = listing;
+
         this.yourForm.get('title')?.setValue(listing.title);
         this.yourForm.get('description')?.setValue(listing.description);
         this.yourForm.get('price')?.setValue(listing.price.toString());
-        this.selectedCategories = listing.categories;
+
         this.contactInfo = listing.contactInfo;
+
+        this.selectedCategories = listing.categories;
         listing.categories.forEach(category => {
           const checkbox =document.querySelector('#' + category) as HTMLInputElement;
           if (checkbox)
@@ -87,20 +96,14 @@ export class ListingEditComponent implements OnInit{
     }
   }
 
-  checkFormValidity(listing: Listing): boolean {
-    return (
-      ((this.listing && this.image) && (this.image.size >= 5000000 || listing.categories.length < 1 || this.image.type !== "png")) ||
-      (!this.listing && (!this.image || this.image.size >= 5000000 || listing.categories.length < 1 || this.image.type !== "png")) ||
-      !/^[\w\s\d\S]{1,100}$/.test(listing.title) ||
-      !/^[\w\s\d\S]{1,500}$/.test(listing.description) ||
-      !/\d+(\.\d{1,2})?$/.test(listing.price.toString()) ||
-      !/^[\p{L}\p{M}\s.'-]{1,40}$/u.test(listing.contactInfo.firstName) ||
-      !/^[\p{L}\p{M}\s.'-]{1,40}$/u.test(listing.contactInfo.lastName) ||
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(listing.contactInfo.email) ||
-      !/^[+]?[0-9]{0,14}$/.test(listing.contactInfo.phoneNumber) ||
-      !/^[\s\S]{0,100}$/u.test(listing.contactInfo.address) ||
-      !/^[0-9]{5}$/u.test(listing.contactInfo.postalCode)
-    );
+  checkImageValidity(): boolean {
+    const image = this.image;
+    if (image && image.type == 'png' && image && image.size <= 5000000)
+      return true;
+    else if (this.listing && image == null)
+      return true;
+    else
+      return false;
   }
 
   onSubmit() {
@@ -119,10 +122,10 @@ export class ListingEditComponent implements OnInit{
       listing.imageId = this.listing.imageId;
     }
 
-    if (listing.categories.length < 1)
+    if (listing.categories.length)
       this.categorySelected = false;
 
-    if (this.checkFormValidity(listing)) {
+    if (this.checkImageValidity() && listing.categories.length < 1) {
       const action = this.listing ? 'update' : 'post';
 
       console.log(this.listing);
