@@ -46,6 +46,12 @@ export class ListingService {
       );
   }
 
+  public deleteListing(id: string): Observable<any> {
+    return this.http.delete<Listing>(this.url + 'delete-listing/' + id, {headers:{Authorization: this.token}}).pipe(
+      catchError((error) => this.errorHandling(error)),
+    )
+  }
+
   public saveImage(image: File | null, imageId: string) {
     const formData = new FormData();
     if (image)
