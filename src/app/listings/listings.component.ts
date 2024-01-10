@@ -60,7 +60,7 @@ export class ListingsComponent implements OnInit {
   }
 
   selectCategory(category: string, set: boolean) {
-    const selectedBtn = document.getElementById(category);
+    const selectedBtn = document.getElementById(category.replace(' ', ''));
     const buttons = document.getElementsByClassName("category-select-btn");
 
     if (buttons) {
@@ -69,14 +69,17 @@ export class ListingsComponent implements OnInit {
       }
     }
 
-    if (selectedBtn && this.selectedCategory != category) {
-      selectedBtn.classList.add("active");
-      this.selectedCategory =  category;
+    if (selectedBtn) {
+      if (this.selectedCategory != category || set) {
+        selectedBtn.classList.add("active");
+        this.selectedCategory =  category;
+      }
+      else {
+        this.selectedCategory = '';
+        selectedBtn.classList.remove("active");
+      }
     }
-    else if (selectedBtn && !set){
-      this.selectedCategory = '';
-      selectedBtn.classList.remove("active");
-    }
+
   }
 
   generateParams() {

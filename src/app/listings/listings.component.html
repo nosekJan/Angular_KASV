@@ -14,7 +14,7 @@
 
       <li *ngFor="let category of CATEGORIES"
           (click)="selectCategory(category, false)"
-          [id]="category"
+          [id]="category.replace(' ','')"
           class="flex items-center p-2 rounded-lg hover:bg-primary group cursor-pointer category-select-btn border-2 border-gray-800">
           <span class="ms-3">{{category}}</span>
       </li>
