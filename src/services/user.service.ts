@@ -65,11 +65,13 @@ export class UserService {
     return !!this.token;
   }
 
-  public registerUser(user: User): Observable<User> {
-    return this.http
+  public registerUser(user: User): Observable<boolean> {
+     return this.http
       .post<User>(this.url + 'register', user)
       .pipe(
-        map((jsonUser) => User.clone(jsonUser)),
+        map(() => {
+            return true
+          }),
         catchError((error) => this.errorHandling(error)
         ),
       )

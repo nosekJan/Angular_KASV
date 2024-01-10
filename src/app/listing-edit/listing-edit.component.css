@@ -1,12 +1,8 @@
 form {
-  margin: auto;
+  margin: 100px auto;
   align-content: center;
   width: fit-content;
   max-width: 90%;
-}
-
-#main-div {
-  height: calc(100vh - 65px);
 }
 
 mat-card-title {

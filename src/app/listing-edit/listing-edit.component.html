@@ -1,4 +1,4 @@
-<div id="main-div" class="flex flex-col sm:flex-row items-center justify-center min-h-fit">
+<div class="flex flex-col sm:flex-row items-center justify-center min-h-fit">
   <form (ngSubmit)="onSubmit()" class="flex flex-col sm:w-1/2 bg-gray-800 shadow-xl rounded-xl p-6" *ngIf="!created">
     <div role="alert" *ngIf="showError">
       <p class="text-lg text-red-500 text-center mb-2">Please fill out all fields with valid data!</p>
@@ -217,7 +217,7 @@
 
   </form>
 
-  <div *ngIf="created" class="flex flex-col bg-gray-800 shadow-xl rounded-xl p-6">
+  <div *ngIf="created" class="flex flex-col my-52 bg-gray-800 shadow-xl rounded-xl p-6">
     <p>
       The listing was successfully created!
     </p>
