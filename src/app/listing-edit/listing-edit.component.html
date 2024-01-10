@@ -1,4 +1,4 @@
-<div class="flex flex-col sm:flex-row items-center justify-center min-h-fit">
+<div id="main-div" class="flex flex-col sm:flex-row items-center justify-center min-h-fit">
   <form (ngSubmit)="onSubmit()" class="flex flex-col sm:w-1/2 bg-gray-800 shadow-xl rounded-xl p-6" *ngIf="!created">
     <div role="alert" *ngIf="showError">
       <p class="text-lg text-red-500 text-center mb-2">Please fill out all fields with valid data!</p>
@@ -84,7 +84,7 @@
             <label class="label cursor-pointer">
               <span class="label-text">{{category}}</span>
               <input type="checkbox"
-                     id="{{category}}"
+                     [id]="category.replace(' ','')"
                      class="checkbox checkbox-primary"
                       (change)="selectCategory(category)"/>
             </label>

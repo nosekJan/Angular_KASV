@@ -82,6 +82,7 @@ export class ListingEditComponent implements OnInit{
 
         this.selectedCategories = listing.categories;
         listing.categories.forEach(category => {
+          category = category.replace(' ','');
           const checkbox =document.querySelector('#' + category) as HTMLInputElement;
           if (checkbox)
             checkbox.checked = true
@@ -104,9 +105,10 @@ export class ListingEditComponent implements OnInit{
     this.yourForm.get('postalCode')?.setValue(contactInfo.postalCode);
   }
 
-  checkImageValidity(): boolean {
+  checkImageValidity() {
     const image = this.image;
-    if (image && image.type == 'png' && image && image.size <= 5000000)
+
+    if (image && image.type == 'image/png' && image && image.size <= 5000000)
       return true;
     else if (this.listing && image == null)
       return true;
@@ -120,7 +122,7 @@ export class ListingEditComponent implements OnInit{
       this.userService.username,
       this.yourForm.get("title")?.value || '',
       this.yourForm.get("description")?.value || '',
-      Number.parseFloat(this.yourForm.get("price")?.value || '',),
+      Number.parseFloat(this.yourForm.get("price")?.value || '0'),
       this.selectedCategories,
       '',
       new ContactInfo(
@@ -137,13 +139,11 @@ export class ListingEditComponent implements OnInit{
       listing.imageId = this.listing.imageId;
     }
 
-    if (listing.categories.length)
+    if (listing.categories.length < 0)
       this.categorySelected = false;
 
-    if (this.checkImageValidity() && listing.categories.length < 1) {
+    if (this.checkImageValidity() && listing.categories.length > 0) {
       const action = this.listing ? 'update' : 'post';
-
-      console.log(this.listing);
 
       if (this.listing) {
         this.listingService.saveListing(listing, action).subscribe(() => {
