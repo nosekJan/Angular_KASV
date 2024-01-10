@@ -218,11 +218,11 @@
   </form>
 
   <div *ngIf="created" class="flex flex-col my-52 bg-gray-800 shadow-xl rounded-xl p-6">
-    <p>
-      The listing was successfully created!
+    <p class="text-lg font-bold m-2">
+      The listing was successfully published!
     </p>
     <button type="button"
-            (click)="router.navigateByUrl('/')"
+            (click)="location.back()"
             class="text-white flex mx-auto bottom-2.5 font-medium rounded-lg text-sm px-4 py-2 bg-primary hover:bg-secondary focus:ring-secondary">
       OK
     </button>

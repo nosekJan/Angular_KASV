@@ -16,7 +16,6 @@ import {CATEGORIES} from "../../services/listing.service";
 })
 
 export class LoginComponent{
-  hide = true;
   auth = new Auth('', '');
   usersService = inject(UserService);
   location: Location = inject(Location);

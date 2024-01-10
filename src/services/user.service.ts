@@ -69,9 +69,7 @@ export class UserService {
      return this.http
       .post<User>(this.url + 'register', user)
       .pipe(
-        map(() => {
-            return true
-          }),
+        map(() => { return true }),
         catchError((error) => this.errorHandling(error)
         ),
       )

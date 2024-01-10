@@ -6,3 +6,8 @@
   background-color: transparent;
   opacity: 0.5;
 }
+
+#listings-container {
+  overflow: hidden;
+  max-width: 80%;
+}

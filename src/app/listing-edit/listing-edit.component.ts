@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, Location} from '@angular/common';
 import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MaterialModule} from "../../modules/material.module";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
@@ -23,6 +23,7 @@ export class ListingEditComponent implements OnInit{
 
   listingService = inject(ListingService);
   userService = inject(UserService);
+  location = inject(Location);
   route: ActivatedRoute = inject(ActivatedRoute);
   router: Router = inject(Router);
 
@@ -31,7 +32,7 @@ export class ListingEditComponent implements OnInit{
   id = this.route.snapshot.paramMap.get('id');
   listing: Listing | null = null;
 
-  created = false;
+  created = true;
 
   image: File | null = null;
   imageTooLarge = false;
@@ -166,5 +167,4 @@ export class ListingEditComponent implements OnInit{
     else
       this.showError = true;
   }
-
 }
