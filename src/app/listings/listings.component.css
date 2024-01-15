@@ -8,6 +8,7 @@
 }
 
 #listings-container {
-  overflow: hidden;
-  max-width: 80%;
+  max-height: 95vh;
+  padding-left: 244px;
+  padding-bottom: 50px;
 }

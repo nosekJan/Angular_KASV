@@ -43,7 +43,7 @@ export class ListingEditComponent implements OnInit{
 
   fb: FormBuilder = inject(FormBuilder);
 
-  yourForm = this.fb.group({
+  form = this.fb.group({
     title: new FormControl('', [Validators.required, Validators.pattern(/^[\w\s\d\S]{1,100}$/)]),
     description: new FormControl('', [Validators.required, Validators.pattern(/^[\w\s\d\S]{1,500}$/)]),
     price: new FormControl('', [Validators.required, Validators.pattern(/\d+(\.\d{1,2})?$/)]),
@@ -76,9 +76,9 @@ export class ListingEditComponent implements OnInit{
       this.listingService.getListing(this.id).subscribe(listing => {
         this.listing = listing;
 
-        this.yourForm.get('title')?.setValue(listing.title);
-        this.yourForm.get('description')?.setValue(listing.description);
-        this.yourForm.get('price')?.setValue(listing.price.toString());
+        this.form.get('title')?.setValue(listing.title);
+        this.form.get('description')?.setValue(listing.description);
+        this.form.get('price')?.setValue(listing.price.toString());
         this.loadContactInfo(listing.contactInfo);
 
         this.selectedCategories = listing.categories;
@@ -98,12 +98,12 @@ export class ListingEditComponent implements OnInit{
   }
 
   loadContactInfo(contactInfo: ContactInfo) {
-    this.yourForm.get('firstName')?.setValue(contactInfo.firstName);
-    this.yourForm.get('lastName')?.setValue(contactInfo.lastName);
-    this.yourForm.get('email')?.setValue(contactInfo.email);
-    this.yourForm.get('phoneNumber')?.setValue(contactInfo.phoneNumber);
-    this.yourForm.get('address')?.setValue(contactInfo.address);
-    this.yourForm.get('postalCode')?.setValue(contactInfo.postalCode);
+    this.form.get('firstName')?.setValue(contactInfo.firstName);
+    this.form.get('lastName')?.setValue(contactInfo.lastName);
+    this.form.get('email')?.setValue(contactInfo.email);
+    this.form.get('phoneNumber')?.setValue(contactInfo.phoneNumber);
+    this.form.get('address')?.setValue(contactInfo.address);
+    this.form.get('postalCode')?.setValue(contactInfo.postalCode);
   }
 
   checkImageValidity() {
@@ -121,18 +121,18 @@ export class ListingEditComponent implements OnInit{
 
     let listing = new Listing(
       this.userService.username,
-      this.yourForm.get("title")?.value || '',
-      this.yourForm.get("description")?.value || '',
-      Number.parseFloat(this.yourForm.get("price")?.value || '0'),
+      this.form.get("title")?.value || '',
+      this.form.get("description")?.value || '',
+      Number.parseFloat(this.form.get("price")?.value || '0'),
       this.selectedCategories,
       '',
       new ContactInfo(
-        this.yourForm.get("phoneNumber")?.value || '',
-        this.yourForm.get("firstName")?.value || '',
-        this.yourForm.get("lastName")?.value || '',
-        this.yourForm.get("email")?.value || '',
-        this.yourForm.get("address")?.value || '',
-        this.yourForm.get("postalCode")?.value || '',
+        this.form.get("phoneNumber")?.value || '',
+        this.form.get("firstName")?.value || '',
+        this.form.get("lastName")?.value || '',
+        this.form.get("email")?.value || '',
+        this.form.get("address")?.value || '',
+        this.form.get("postalCode")?.value || '',
       ));
 
     if (this.listing) {
@@ -143,7 +143,7 @@ export class ListingEditComponent implements OnInit{
     if (listing.categories.length < 0)
       this.categorySelected = false;
 
-    if (this.checkImageValidity() && listing.categories.length > 0) {
+    if (this.checkImageValidity() && listing.categories.length > 0 && this.userService.checkFormValidity(this.form)) {
       const action = this.listing ? 'update' : 'post';
 
       if (this.listing) {

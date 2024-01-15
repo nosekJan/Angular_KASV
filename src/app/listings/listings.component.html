@@ -1,7 +1,7 @@
-<div class="flex">
+<div class="flex flex-row">
   <aside
     id="sidebar-multi-level-sidebar"
-    class="left-0 w-full h-screen transition-transform">
+    class="left-0 h-screen transition-transform w-fit">
     <div class="fixed h-full px-3 py-4 overflow-y-auto bg-gray-800">
       <ul class="space-y-2">
         <li>
@@ -44,8 +44,8 @@
       </div>
     </div>
   </aside>
-  <div class="flex-grow" id="listings-container">
-    <app-game-card *ngFor="let listing of listings" [listing]="listing"></app-game-card>
+  <div class="flex overflow-auto flex-wrap" id="listings-container">
+    <app-game-card class="m-8 mb-0 w-full" *ngFor="let listing of listings" [listing]="listing"></app-game-card>
   </div>
 
 

@@ -7,7 +7,7 @@
       <div class="w-80">
         <p class="text-xl font-bold text-center pb-2">Listing info</p>
 
-        <div class="w-full px-3 pb-3" [formGroup]="yourForm">
+        <div class="w-full px-3 pb-3" [formGroup]="form">
           <input type="text"
                  id="titleField"
                  name="titleField"
@@ -19,12 +19,12 @@
                  formControlName="title"
           />
 
-          <div role="alert" *ngIf="yourForm.controls['title'].errors?.['required'] && yourForm.controls['title'].touched">
+          <div role="alert" *ngIf="form.controls['title'].errors?.['required'] && form.controls['title'].touched">
             <p class="text-xs pt-2 text-red-500">Please give a title for the listing.</p>
           </div>
         </div>
 
-        <div class="w-full px-3 pb-3" [formGroup]="yourForm">
+        <div class="w-full px-3 pb-3" [formGroup]="form">
         <textarea
           id="descriptionField"
           name="descriptionField"
@@ -35,12 +35,12 @@
           pattern="^[\w\s\d\S]{1,400}$"
           formControlName="description"
         ></textarea>
-          <div role="alert" *ngIf="yourForm.controls['description'].errors?.['required'] && yourForm.controls['description'].touched">
+          <div role="alert" *ngIf="form.controls['description'].errors?.['required'] && form.controls['description'].touched">
             <p class="text-xs pt-2 text-red-500">Please write a short description.</p>
           </div>
         </div>
 
-        <div class="w-full px-3 pb-3" [formGroup]="yourForm">
+        <div class="w-full px-3 pb-3" [formGroup]="form">
           <input
             type="text"
             id="priceField"
@@ -51,12 +51,12 @@
             pattern="\d+(\.\d{1,2})?$"
             formControlName="price"
           />
-          <div role="alert" *ngIf="yourForm.controls['price'].errors?.['required'] && yourForm.controls['price'].touched">
+          <div role="alert" *ngIf="form.controls['price'].errors?.['required'] && form.controls['price'].touched">
             <p class="text-xs pt-2 text-red-500">Please enter a number.</p>
           </div>
         </div>
 
-        <div class="w-full px-3 pb-3" [formGroup]="yourForm">
+        <div class="w-full px-3 pb-3" [formGroup]="form">
           <input
             (change)="onFileChange($event)"
             type="file"
@@ -67,8 +67,8 @@
             accept="image/png"
             formControlName="image"
           />
-          <div role="alert" *ngIf="(yourForm.controls['image'].errors?.['required'] || imageTooLarge)
-                                  && yourForm.controls['image'].touched">
+          <div role="alert" *ngIf="(form.controls['image'].errors?.['required'] || imageTooLarge)
+                                  && form.controls['image'].touched">
             <p class="text-xs pt-2 text-red-500">Please select a .png image (maximum 5MB)</p>
           </div>
         </div>
@@ -100,7 +100,7 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 ">
 
-          <div class="w-full px-3 pb-3" [formGroup]="yourForm">
+          <div class="w-full px-3 pb-3" [formGroup]="form">
             <input
               type="text"
               id="firstNameField"
@@ -111,13 +111,13 @@
               pattern="^[\p{L}\p{M}\s]{1,40}$"
               formControlName="firstName"
             />
-            <div role="alert" *ngIf="yourForm.controls['firstName'].errors?.['required'] &&
-                                     yourForm.controls['firstName'].touched">
+            <div role="alert" *ngIf="form.controls['firstName'].errors?.['required'] &&
+                                     form.controls['firstName'].touched">
               <p class="text-red-500 text-xs pt-2">Please fill out this field.</p>
             </div>
           </div>
 
-          <div class="w-full px-3 pb-3" [formGroup]="yourForm">
+          <div class="w-full px-3 pb-3" [formGroup]="form">
             <input
               type="text"
               id="lastNameField"
@@ -128,13 +128,13 @@
               required
               formControlName="lastName"
             />
-            <div role="alert" *ngIf="yourForm.controls['lastName'].errors?.['required'] &&
-                                     yourForm.controls['lastName'].touched">
+            <div role="alert" *ngIf="form.controls['lastName'].errors?.['required'] &&
+                                     form.controls['lastName'].touched">
               <p class="text-red-500 text-xs pt-2">Please fill out this field.</p>
             </div>
           </div>
 
-          <div class="w-full px-3 pb-3" [formGroup]="yourForm">
+          <div class="w-full px-3 pb-3" [formGroup]="form">
             <input
               type="email"
               id="emailField"
@@ -145,13 +145,13 @@
               pattern="[^\s@]+@[^\s@]+"
               formControlName="email"
             />
-            <div role="alert" *ngIf="yourForm.controls['email'].errors?.['required'] &&
-                                     yourForm.controls['email'].touched">
+            <div role="alert" *ngIf="form.controls['email'].errors?.['required'] &&
+                                     form.controls['email'].touched">
               <p class="text-red-500 text-xs pt-2">Please fill out this field.</p>
             </div>
           </div>
 
-          <div class="w-full px-3 pb-3" [formGroup]="yourForm">
+          <div class="w-full px-3 pb-3" [formGroup]="form">
             <input
               type="text"
               id="phoneNumberField"
@@ -162,13 +162,13 @@
               pattern="^[+]?[0-9]{0,14}$"
               formControlName="phoneNumber"
             />
-            <div role="alert" *ngIf="yourForm.controls['phoneNumber'].errors?.['required'] &&
-                                     yourForm.controls['phoneNumber'].touched">
+            <div role="alert" *ngIf="form.controls['phoneNumber'].errors?.['required'] &&
+                                     form.controls['phoneNumber'].touched">
               <p class="text-red-500 text-xs pt-2">Please fill out this field.</p>
             </div>
           </div>
 
-          <div class="w-full px-3 pb-3" [formGroup]="yourForm">
+          <div class="w-full px-3 pb-3" [formGroup]="form">
             <input
               type="text"
               id="addressField"
@@ -179,13 +179,13 @@
               pattern="^[\s\S]{0,100}$"
               formControlName="address"
             />
-            <div role="alert" *ngIf="yourForm.controls['address'].errors?.['required'] &&
-                                     yourForm.controls['address'].touched">
+            <div role="alert" *ngIf="form.controls['address'].errors?.['required'] &&
+                                     form.controls['address'].touched">
               <p class="text-red-500 text-xs pt-2">Please fill out this field.</p>
             </div>
           </div>
 
-          <div class="w-full px-3 pb-3" [formGroup]="yourForm">
+          <div class="w-full px-3 pb-3" [formGroup]="form">
             <input
               type="text"
               id="postalCodeField"
@@ -196,8 +196,8 @@
               pattern="^[0-9]{5}$"
               formControlName="postalCode"
             />
-            <div role="alert" *ngIf="yourForm.controls['postalCode'].errors?.['required'] &&
-                                     yourForm.controls['postalCode'].touched">
+            <div role="alert" *ngIf="form.controls['postalCode'].errors?.['required'] &&
+                                     form.controls['postalCode'].touched">
               <p class="text-red-500 text-xs pt-2">Please fill out this field.</p>
             </div>
           </div>

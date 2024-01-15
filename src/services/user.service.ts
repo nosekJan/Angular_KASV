@@ -5,6 +5,7 @@ import {catchError, EMPTY, map, Observable} from "rxjs";
 import {User} from "../entities/user";
 import {Router} from "@angular/router";
 import {Listing} from "../entities/listing";
+import {FormGroup} from "@angular/forms";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,20 @@ export class UserService {
   url = "http://localhost:8080/";
 
   restrictedUrlPatterns = /(listing-edit|profile)/;
+
+  checkFormValidity(form: FormGroup){
+    const controls = Object.keys(form.controls);
+    let valid = true;
+
+    controls.forEach(controlName => {
+      const control = form.get(controlName);
+      if (!(control && control.valid))
+        valid = false;
+
+    });
+
+    return valid;
+  }
 
   get token(): string {
     return localStorage.getItem('token') || '';

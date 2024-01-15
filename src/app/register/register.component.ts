@@ -46,21 +46,13 @@ export class RegisterComponent {
     return this.form.get('password')?.value === this.form.get('repeatPassword')?.value;
   }
 
-  checkFormValidity(){
-    const controls = Object.keys(this.form.controls);
-    let valid = true;
-
-    controls.forEach(controlName => {
-      const control = this.form.get(controlName);
-      if (!(control && control.valid))
-        valid = false;
-
-    });
-
-    return valid;
-  }
-
   onSubmit() {
+
+    if (!this.userService.checkFormValidity(this.form)) {
+      this.showError = true;
+      return;
+    }
+
     const user = new User(
       this.form.get('username')?.value || '',
       this.form.get('password')?.value || '',
@@ -73,11 +65,6 @@ export class RegisterComponent {
         this.form.get('postalCode')?.value || '',
       )
     )
-
-    if (!this.checkFormValidity()) {
-      this.showError = true;
-      return;
-    }
 
     this.userService.registerUser(user).subscribe(success => {
       if (success)
