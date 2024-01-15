@@ -32,7 +32,7 @@ export class ListingEditComponent implements OnInit{
   id = this.route.snapshot.paramMap.get('id');
   listing: Listing | null = null;
 
-  created = true;
+  created = false;
 
   image: File | null = null;
   imageTooLarge = false;
