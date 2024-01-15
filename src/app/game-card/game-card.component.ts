@@ -1,4 +1,4 @@
-import {Component, inject, Input} from '@angular/core';
+import {asNativeElements, Component, ElementRef, inject, Input, ViewChild} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
@@ -23,6 +23,9 @@ import {ListingService} from "../../services/listing.service";
 })
 
 export class GameCardComponent{
+
+  constructor(contactInfo: ElementRef) {
+  }
 
   @Input() listing = new Listing('','','',0,[],'',
     new ContactInfo('','','','','',''));
@@ -50,5 +53,18 @@ export class GameCardComponent{
         else
           alert("Error! Try again later.");
       });
+  }
+
+  toggleContactInfo(id: string | undefined) {
+    const elements = document.getElementsByClassName("contact-info");
+    const self = document.getElementById(id || '');
+
+    if (self)
+      self.classList.toggle("hide");
+
+    if (elements && self)
+      for (let i = 0; i < elements.length; i++)
+        if (elements[i] != self && !elements[i].classList.contains("hide"))
+          elements[i].classList.toggle("hide");
   }
 }

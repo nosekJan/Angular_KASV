@@ -1,8 +1,9 @@
-<div class="card bg-base-100 shadow-xl float-right w-full rounded-xl transform
-            transition duration-300 ease-in-out hover:scale-105 hover:bg-gray-800 cursor-pointer">
+<div (click)="toggleContactInfo(listing.id)"
+  class="card bg-base-200 shadow-xl float-right w-full rounded-xl transform
+            transition duration-300 ease-in-out hover:scale-y-105 hover:bg-gray-800 cursor-pointer">
   <div class="flex flex-col md:flex-row">
     <figure class="md:w-1/4">
-      <img class="h-56 w-full object-contain rounded-t-xl md:rounded-l-xl md:rounded-t-none md:rounded-r-xl"
+      <img class="h-56 w-full object-contain rounded-l-xl"
            src="http://localhost:8080/get-image/{{listing.imageId}}"
            alt="game"/>
     </figure>
@@ -34,7 +35,7 @@
             </span>
           </div>
         </div>
-        <div class="text-base md:text-md overflow-y-auto max-h-32">
+        <div class="text-base md:text-md overflow-y-auto max-h-24">
           {{listing.description}}
         </div>
       </div>
@@ -56,4 +57,29 @@
       </div>
     </div>
   </div>
+
+  <div [id]="listing.id" class="hide contact-info overflow-x-auto border-t-accent">
+    <table class="table">
+      <!-- head -->
+      <thead>
+      <tr>
+        <th>Name:</th>
+        <th>Email:</th>
+        <th>Tel.:</th>
+        <th>Address:</th>
+        <th>Postal code:</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>{{listing.contactInfo.firstName}} {{listing.contactInfo.lastName}}</td>
+        <td>{{listing.contactInfo.email}}</td>
+        <td>{{listing.contactInfo.phoneNumber}}</td>
+        <td>{{listing.contactInfo.address}}</td>
+        <td>{{listing.contactInfo.postalCode}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
 </div>
