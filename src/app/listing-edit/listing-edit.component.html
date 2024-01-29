@@ -108,7 +108,7 @@
               placeholder="First name"
               class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
               required
-              pattern="^[\p{L}\p{M}\s]{1,40}$"
+              pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ]{1,40}$"
               formControlName="firstName"
             />
             <div role="alert" *ngIf="form.controls['firstName'].errors?.['required'] &&
@@ -124,7 +124,7 @@
               name="lastNameField"
               placeholder="Last name"
               class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
-              pattern="^[\p{L}\p{M}\s]{1,40}$"
+              pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ]{1,40}$"
               required
               formControlName="lastName"
             />

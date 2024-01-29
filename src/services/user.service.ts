@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Auth} from "../entities/auth";
-import {catchError, EMPTY, map, Observable} from "rxjs";
+import {catchError, EMPTY, map, Observable, of, retry} from "rxjs";
 import {User} from "../entities/user";
 import {Router} from "@angular/router";
 import {Listing} from "../entities/listing";
@@ -24,9 +24,12 @@ export class UserService {
 
     controls.forEach(controlName => {
       const control = form.get(controlName);
-      if (!(control && control.valid))
-        valid = false;
-
+      if (control) {
+        if (!control.valid) {
+          console.log(controlName)
+          valid = false;
+        }
+      }
     });
 
     return valid;
@@ -58,7 +61,7 @@ export class UserService {
     return this.http.get(this.url + "login",
       {
         responseType: "text",
-        headers: {username: auth.name, password: auth.password}
+        headers: {X_Username: auth.name, X_Password: auth.password}
       }
     ).pipe(
       map(token => {

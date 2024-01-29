@@ -44,8 +44,10 @@
         <div class="text-xl md:text-lg lg:text-xl mb-4 md:mb-0">
           <p class="font-bold">{{listing.price}}€</p>
           <a
+            *ngIf="router.url !== '/profile'"
             [routerLink]="['/listings','-','-','-',listing.seller]"
             (click)="searchBySeller(listing.seller)"
+            id="seller"
             class="btn btn-neutral btn-sm">
             {{listing.seller}}
           </a>

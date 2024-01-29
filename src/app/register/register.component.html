@@ -61,7 +61,7 @@
             type="text"
             name="firstName"
             placeholder="First name"
-            pattern="^[\p{L}\p{M}\s]{1,40}$"
+            pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ]{1,40}$"
             class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
           />
           <div role="alert" *ngIf="form.controls['address'].errors?.['required'] &&
@@ -75,7 +75,7 @@
             type="text"
             name="lastName"
             placeholder="Last name"
-            pattern="^[\p{L}\p{M}\s]{1,40}$"
+            pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ]{1,40}$"
             class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
           />
           <div role="alert" *ngIf="form.controls['lastName'].errors?.['required'] &&
