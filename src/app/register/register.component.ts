@@ -57,12 +57,12 @@ export class RegisterComponent {
       this.form.get('username')?.value || '',
       this.form.get('password')?.value || '',
       new ContactInfo(
+        this.form.get('phoneNumber')?.value || '',
         this.form.get('firstName')?.value || '',
         this.form.get('lastName')?.value || '',
         this.form.get('email')?.value || '',
-        this.form.get('phoneNumber')?.value || '',
         this.form.get('address')?.value || '',
-        this.form.get('postalCode')?.value || '',
+        this.form.get('postalCode')?.value || ''
       )
     )
 

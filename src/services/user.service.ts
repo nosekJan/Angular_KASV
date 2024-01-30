@@ -1,11 +1,13 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient, HttpResponse} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import {Auth} from "../entities/auth";
 import {catchError, EMPTY, map, Observable, of, retry} from "rxjs";
 import {User} from "../entities/user";
 import {Router} from "@angular/router";
 import {Listing} from "../entities/listing";
-import {FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {ContactInfo} from "../entities/contact-info";
+import {DialogService} from "./dialog.service";
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,7 @@ export class UserService {
 
   http: HttpClient = inject(HttpClient);
   router: Router = inject(Router);
+  dialogService = inject(DialogService);
   url = "http://localhost:8080/";
 
   restrictedUrlPatterns = /(listing-edit|profile)/;
@@ -68,7 +71,8 @@ export class UserService {
         this.username = auth.name;
         this.token = token;
         return true;
-      })
+      }),
+        catchError((error) => this.dialogService.errorHandling(error))
     );
   }
 
@@ -88,7 +92,7 @@ export class UserService {
       .post<User>(this.url + 'register', user)
       .pipe(
         map(() => { return true }),
-        catchError((error) => this.errorHandling(error)
+        catchError((error) => this.dialogService.errorHandling(error)
         ),
       )
   }
@@ -98,12 +102,26 @@ export class UserService {
       map((userJson) =>
         userJson
       ),
-      catchError((error) => this.errorHandling(error)),
+      catchError((error) => this.dialogService.errorHandling(error)),
     )
   }
 
-  errorHandling(httpError: any): Observable<never> {
-    return EMPTY;
+  public updateContactInfo(user: User): Observable<boolean> {
+    return this.http
+      .post<User>(this.url + 'edit-profile', user, {headers:{Authorization: this.token}})
+      .pipe(
+        map(() => { return true }),
+        catchError((error) => this.dialogService.errorHandling(error)
+        ),
+      )
   }
 
+  loadContactInfo(contactInfo: ContactInfo, form: FormGroup) {
+    form.get('firstName')?.setValue(contactInfo.firstName);
+    form.get('lastName')?.setValue(contactInfo.lastName);
+    form.get('email')?.setValue(contactInfo.email);
+    form.get('phoneNumber')?.setValue(contactInfo.phoneNumber);
+    form.get('address')?.setValue(contactInfo.address);
+    form.get('postalCode')?.setValue(contactInfo.postalCode);
+  }
 }

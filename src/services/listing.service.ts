@@ -4,6 +4,7 @@ import {catchError, EMPTY, map, Observable, of, retry, switchMap} from "rxjs";
 import {Listing} from "../entities/listing";
 import {UserService} from "./user.service";
 import {User} from "../entities/user";
+import {DialogService} from "./dialog.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class ListingService {
 
   url = "http://localhost:8080/";
   userService: UserService = inject(UserService);
+  dialogService: DialogService = inject(DialogService);
   token = this.userService.token;
 
   public getListings(params: string): Observable<Listing[]> {
@@ -22,7 +24,7 @@ export class ListingService {
       map((jsonListings) =>
         jsonListings.map((jsonListings) => Listing.clone(jsonListings)),
       ),
-      catchError((error) => this.errorHandling(error)),
+      catchError((error) => this.dialogService.errorHandling(error)),
     )
   }
 
@@ -31,7 +33,7 @@ export class ListingService {
       map((listingJson) =>
         listingJson
       ),
-      catchError((error) => this.errorHandling(error)),
+      catchError((error) => this.dialogService.errorHandling(error)),
     )
   }
 
@@ -42,7 +44,7 @@ export class ListingService {
         map(imageId => {
           return imageId}
         ),
-        catchError((error) => this.errorHandling(error))
+        catchError((error) => this.dialogService.errorHandling(error))
       );
   }
 
@@ -53,7 +55,7 @@ export class ListingService {
         map(() => {
           return true;
         }),
-        catchError((error) => this.errorHandling(error))
+        catchError((error) => this.dialogService.errorHandling(error))
     );
   }
 
@@ -68,7 +70,7 @@ export class ListingService {
         map(() => {
           return true;
         }),
-        catchError((error) => this.errorHandling(error))
+        catchError((error) => this.dialogService.errorHandling(error))
       );
   }
 
@@ -77,13 +79,8 @@ export class ListingService {
       map((image) =>
         image
       ),
-      catchError((error) => this.errorHandling(error)),
+      catchError((error) => this.dialogService.errorHandling(error)),
     )
-  }
-
-  errorHandling(httpError: any): Observable<never> {
-    alert("The server is down. Try again later.")
-    return EMPTY;
   }
 
 }

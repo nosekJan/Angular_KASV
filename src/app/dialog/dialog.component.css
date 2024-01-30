@@ -1,0 +1,7 @@
+div {
+    display: block;
+    position: fixed;
+    left: calc(50% - 250px);
+    bottom: 50px;
+    width: 500px;
+}

@@ -12,7 +12,11 @@
 
         <hr class="h-px my-1 bg-gray-700 border-0 ">
 
-        <div class="w-full px-3 pb-3" [formGroup]="contactInfoForm">
+        <div role="alert" *ngIf="showError">
+          <p class="text-xs text-red-500 text-center mb-2">Please fill out all fields with valid data!</p>
+        </div>
+
+        <div class="w-full px-3 pb-3" [formGroup]="form">
           <input type="text"
                  id="firstName"
                  name="firstName"
@@ -25,7 +29,7 @@
           />
         </div>
 
-        <div class="w-full px-3 pb-3" [formGroup]="contactInfoForm">
+        <div class="w-full px-3 pb-3" [formGroup]="form">
           <input type="text"
                  id="lastName"
                  name="lastName"
@@ -38,7 +42,7 @@
           />
         </div>
 
-        <div class="w-full px-3 pb-3" [formGroup]="contactInfoForm">
+        <div class="w-full px-3 pb-3" [formGroup]="form">
           <input type="email"
                  id="email"
                  name="email"
@@ -46,12 +50,12 @@
                  class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
                  required
                  maxlength="100"
-                 pattern="^[\w\s\d\S]{1,100}$"
+                 pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
                  formControlName="email"
           />
         </div>
 
-        <div class="w-full px-3 pb-3" [formGroup]="contactInfoForm">
+        <div class="w-full px-3 pb-3" [formGroup]="form">
           <input type="text"
                  id="phoneNumber"
                  name="phoneNumber"
@@ -59,12 +63,12 @@
                  class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
                  required
                  maxlength="100"
-                 pattern="^[\w\s\d\S]{1,100}$"
+                 pattern="^[+]?[0-9]{0,14}$"
                  formControlName="phoneNumber"
           />
         </div>
 
-        <div class="w-full px-3 pb-3" [formGroup]="contactInfoForm">
+        <div class="w-full px-3 pb-3" [formGroup]="form">
           <input type="text"
                  id="address"
                  name="address"
@@ -72,20 +76,19 @@
                  class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
                  required
                  maxlength="100"
-                 pattern="^[\w\s\d\S]{1,100}$"
                  formControlName="address"
           />
         </div>
 
-        <div class="w-full px-3 pb-3" [formGroup]="contactInfoForm">
-          <input type="number"
+        <div class="w-full px-3 pb-3" [formGroup]="form">
+          <input type="text"
                  id="postalCode"
                  name="postalCode"
                  placeholder="Postal Code"
                  class="input hover:border-primary bg-[#2D394B] w-full max-w-xs p-2"
                  required
-                 maxlength="100"
-                 pattern="^[\w\s\d\S]{1,100}$"
+                 maxlength="5"
+                 pattern="^[0-9]{5}$"
                  formControlName="postalCode"
           />
         </div>

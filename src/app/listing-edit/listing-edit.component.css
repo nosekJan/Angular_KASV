@@ -51,11 +51,6 @@ mat-expansion-panel{
   margin-bottom: 10px;
 }
 
-input:invalid {
-  color: red;
-  caret-color: var(--mdc-filled-text-field-active-indicator-color);
-}
-
 input[type=file]:invalid {
   color: inherit;
 }

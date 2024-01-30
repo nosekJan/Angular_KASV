@@ -79,7 +79,7 @@ export class ListingEditComponent implements OnInit{
         this.form.get('title')?.setValue(listing.title);
         this.form.get('description')?.setValue(listing.description);
         this.form.get('price')?.setValue(listing.price.toString());
-        this.loadContactInfo(listing.contactInfo);
+        this.userService.loadContactInfo(listing.contactInfo, this.form);
 
         this.selectedCategories = listing.categories;
         listing.categories.forEach(category => {
@@ -92,18 +92,9 @@ export class ListingEditComponent implements OnInit{
     }
     else {
       this.userService.getUser().subscribe(user => {
-        this.loadContactInfo(user.contactInfo);
+        this.userService.loadContactInfo(user.contactInfo, this.form);
       })
     }
-  }
-
-  loadContactInfo(contactInfo: ContactInfo) {
-    this.form.get('firstName')?.setValue(contactInfo.firstName);
-    this.form.get('lastName')?.setValue(contactInfo.lastName);
-    this.form.get('email')?.setValue(contactInfo.email);
-    this.form.get('phoneNumber')?.setValue(contactInfo.phoneNumber);
-    this.form.get('address')?.setValue(contactInfo.address);
-    this.form.get('postalCode')?.setValue(contactInfo.postalCode);
   }
 
   checkImageValidity() {
@@ -111,10 +102,7 @@ export class ListingEditComponent implements OnInit{
 
     if (image && image.type == 'image/png' && image && image.size <= 5000000)
       return true;
-    else if (this.listing && image == null)
-      return true;
-    else
-      return false;
+    else return !!(this.listing && image == null);
   }
 
   onSubmit() {
