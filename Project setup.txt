@@ -14,9 +14,9 @@ Installation :
 	
 	1.Create new mongo user with this script :
 
-		db.createUser({
-    user: "admin_username",
-    pwd: "admin_password",
+	db.createUser({
+    user: "game_bazaar_admin",
+    pwd: "game_bazaar_2023",
     roles: [
         { role: "readWriteAnyDatabase", db: "admin" },
         { role: "userAdminAnyDatabase", db: "admin" },
@@ -25,16 +25,20 @@ Installation :
     ]
 })
 
-	2.Clone angular server from following URL into VSCode : https://github.com/nosekJan/Angular_KASV
+  2.Create database with the name "the_game_bazaar"
 
-	3.Install node with the following command : nmp i -g @angular/cli
+  3.Create two collections with following names : "listings" and "users" 
 
-	4.Run the application with following command : ng serve
+	4.Clone angular server from following URL into VSCode : https://github.com/nosekJan/Angular_KASV
 
-	5.Clone Java server into IntelliJ IDEA from the following URL: https://github.com/Matevagyok2002/game-bazaar-server
+	5.Install node with the following command : nmp i -g @angular/cli
 
-	6.Make sure you are using Java version 21
+	6.Run the application with following command : ng serve
+
+	7.Clone Java server into IntelliJ IDEA from the following URL: https://github.com/Matevagyok2002/game-bazaar-server
+
+	8.Make sure you are using Java version 21
 	
-	7.Start the server by running the following class: com.gamebazaar.gamebazaarserver.GameBazaarServerApplication
+	9.Start the server by running the following class: com.gamebazaar.gamebazaarserver.GameBazaarServerApplication
 
 	
