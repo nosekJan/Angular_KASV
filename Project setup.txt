@@ -1,0 +1,40 @@
+Project title : The Game Bazaar
+
+Prerequisites:
+
+	-Node.js
+	-JRE
+	-MongoDB
+	-Git
+	-VSCode
+
+	
+Installation :
+	
+	
+	1.Create new mongo user with this script :
+
+		db.createUser({
+    user: "admin_username",
+    pwd: "admin_password",
+    roles: [
+        { role: "readWriteAnyDatabase", db: "admin" },
+        { role: "userAdminAnyDatabase", db: "admin" },
+        { role: "dbAdminAnyDatabase", db: "admin" },
+        { role: "clusterAdmin", db: "admin" }
+    ]
+})
+
+	2.Clone angular server from following URL into VSCode : https://github.com/nosekJan/Angular_KASV
+
+	3.Install node with the following command : nmp i -g @angular/cli
+
+	4.Run the application with following command : ng serve
+
+	5.Clone Java server into IntelliJ IDEA from the following URL: https://github.com/Matevagyok2002/game-bazaar-server
+
+	6.Make sure you are using Java version 21
+	
+	7.Start the server by running the following class: com.gamebazaar.gamebazaarserver.GameBazaarServerApplication
+
+	
