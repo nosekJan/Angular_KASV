@@ -72,7 +72,7 @@ export class UserService {
         this.token = token;
         return true;
       }),
-        catchError((error) => this.dialogService.errorHandling(error))
+        catchError((error) => this.dialogService.errorHandling(error, 'Invalid credentials!'))
     );
   }
 

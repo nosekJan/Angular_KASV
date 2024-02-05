@@ -20,7 +20,7 @@ export class DialogService {
     this.msgSubject.next({ message, type: 'success' })
   }
 
-  errorHandling(httpError: any): Observable<never> {
+  errorHandling(httpError: any, message?: string): Observable<never> {
     if (httpError instanceof HttpErrorResponse) {
       console.log(httpError);
 
@@ -28,8 +28,12 @@ export class DialogService {
         this.error('Server is not available!')
       }
 
+      else if (httpError.status < 500 && message) {
+        this.error(message);
+      }
+
       else if (httpError.status < 500) {
-        this.error('FATAL ERROR!');
+        this.error('Error! Check console for further details!');
       }
 
       else if (httpError.status >= 500) {

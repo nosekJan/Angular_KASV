@@ -5,7 +5,7 @@ import {ListingEditComponent} from "./listing-edit/listing-edit.component";
 import {HomePageComponent} from "./home-page/home-page.component";
 import {ListingsComponent} from "./listings/listings.component";
 import {ProfileCardComponent} from "./profile-card/profile-card.component";
-import {authGuard} from "./auth.guard";
+import {authGuard} from "../guard/auth.guard";
 
 export const routes: Routes = [
   {path: "login", component: LoginComponent},
